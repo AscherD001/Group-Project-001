@@ -1,0 +1,272 @@
+html, body {
+  height: 100%;
+  min-height: 100%;
+}
+.header,
+p,
+li,
+a,
+span {
+      font-family: 'Lato', sans-serif;
+}
+#weather,
+#time {
+  padding:0px;
+}
+li {
+  font-style: italic;
+}
+.header {
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 30px;
+  padding-top: 5px;
+}
+#displaydiv {
+  text-align: center;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 100px;
+  background-color: rgba(255,255,255,0.24);
+  /*  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);*/
+}
+.NBbutton {
+  color: white;
+  font-family: 'Lato', sans-serif;
+}
+.NBbutton:hover {
+  text-decoration: none;
+}
+.w3-button:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: #400240!important;
+}
+.w3-button:active {
+    color: rgb(255, 255, 255)!important;
+    background-color: #400240!important;
+}
+.w3-button:visited {
+    color: rgb(255, 255, 255)!important;
+    background-color: #400240!important;
+    text-decoration: none!important;
+}
+/*input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out !important;
+    transition: width 0.4s ease-in-out !important;
+}*/
+
+/* When the input field gets focus, change its width to 100% */
+/*input[type=text]:focus {
+    width: 30%;
+}*/
+#NBname {
+/*  margin-right: 850px;*/
+      padding: 2px;
+    font-size: 20px;
+}
+
+.TBnavbar {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  background-color: #400240;
+}
+#hamburger {
+  background-color: #400240;
+  color: white;
+  padding-right: 12px;
+  padding-top: 1px;
+  margin: 0px;
+  font-size: 20px!important;
+}
+.w3-sidebar {
+  right: 0px;
+}
+.barsearch {
+  float: right;
+    font-family: 'Lato', sans-serif;
+}
+body { 
+  background: url(https://static.pexels.com/photos/59519/pexels-photo-59519.jpeg) no-repeat center center fixed;
+/*    http://diysolarpanelsv.com/images/clipart-blue-background-14.jpg */
+/*http://www.coricostache.com/wp-content/uploads/2016/03/Travel_Photography_Blog_SanFrancisco_201111071.jpg*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+/*  background-color: #e8e8e8;*/
+}
+
+#question {
+  color: white;
+  margin-top: 0px;
+  font-family: 'Lato', sans-serif;
+  text-shadow: 1px 3px 7px #6d6868;
+  font-weight: bold;
+}
+
+#city-input {
+/*      background-image: url('../images/searchicon.png');*/ /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat;
+  padding: 10px;
+  width: 80%;
+/*  border-radius: 10px;*/
+    font-family: 'Lato', sans-serif;
+}
+#date-input {
+  margin-top: 20px;
+  padding: 10px;
+  width: 80%;
+/*  border-radius: 10px;*/
+    font-family: 'Lato', sans-serif;
+}
+#search {
+  margin-top: 10px;
+/*  border-radius: 10px;
+  margin-bottom: 30px;*/
+    font-family: 'Lato', sans-serif;
+}
+#myInput {
+    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+#homelogo {
+margin-top: 20px;
+margin-bottom: 10px;
+}
+#infocarddiv {
+  margin-left: 80px;
+  margin-top: 25px;
+  padding-bottom: 30px;
+  background-color: rgba(255,255,255,0.86);
+}
+#infocardRight {
+  width: 80%;
+  margin-left: 30px;
+  margin-top: 25px;
+  padding-bottom: 30px;
+  background-color: rgba(255,255,255,0.86);
+}
+.wrapper {
+  padding-left: 30px;
+  padding-right: 30px;
+
+}
+#cityfacts {
+  padding-top: 8px;
+}
+#cityimage {
+  width: 100%;
+}
+
+
+
+/*CODE PEN SEARCH*/
+
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700);
+@import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
+
+body {
+  font-size: 15px;
+}
+#wrap {
+  margin: 50px 100px;
+  display: inline-block;
+  position: relative;
+  height: 60px;
+  float: right;
+  padding: 0;
+  position: relative;
+}
+
+input[type="text"] {
+  height: 20px;
+  font-size: 20px;
+  display: inline-block;
+  font-weight: 100;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 3px;
+  padding-right: 60px;
+  width: 0px;
+  position: absolute;
+  top: 10px;
+  right: 38px;
+  background: none;
+  z-index: 3;
+  transition: width .4s cubic-bezier(0.000, 0.795, 0.000, 1.000);
+  cursor: pointer;
+}
+
+input[type="text"]:focus:hover {
+  border-bottom: 1px solid #BBB;
+}
+
+input[type="text"]:focus {
+  width: 400px;
+  z-index: 1;
+  border-bottom: 1px solid #BBB;
+  cursor: text;
+}
+input[type="submit"] {
+    height: 32px;
+    width: 32px;
+  display: inline-block;
+  color: white;
+  float: right;
+  background: url(../images/searchicon.png) center center no-repeat;
+  color:white;
+  text-indent: -10000px;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 38px;
+  z-index: 2;
+  cursor: pointer;
+/*  opacity: 0.4;*/
+  cursor: pointer;
+  transition: opacity .4s ease;
+}
+
+input[type="submit"]:hover {
+  opacity: 0.8;
+  box-shadow: none;
+}
+#map {
+  height: 300px;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+.leftColumn {
+  height: 80%;
+}
+#cityblurb {
+  padding: 3%;
+}
+@media screen and (max-width: 767px) {
+  #infocarddiv {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 25px;
+    padding-bottom: 30px;
+    background-color: rgba(255,255,255,0.86);
+  }
+  #infocardRight {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    background-color: rgba(255,255,255,0.86);
+  }
+  #map {
+    width: 100%;
+  }
+}

@@ -1,0 +1,74 @@
+/* Style Here */
+html, body {
+	position: relative;
+  	height: 100%;
+  	min-height: 100%;
+}
+.headline {
+	font-size: 400%;
+	text-align: center;
+	margin: 25px 0px -75px 0px;
+}
+#banner {
+	position: absolute;
+	background-image: url("https://cdn.pixabay.com/photo/2016/01/19/15/48/luggage-1149289_960_720.jpg");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	height: 400px;
+	width: 80%;
+	top: 10%;
+	left: 10%;
+}
+#map {
+	height: 400px;
+	width: 50%;
+	top: 0px;
+	left: 0px;
+}
+#autocomplete {
+	position: absolute;
+	width: 60%;
+	top: 445px;
+	left: 20%;
+	z-index: 500;
+}
+/*.searchInput {
+	text-transform: capitalize;
+}*/
+.display {
+	height: 400px;
+	width: 80%;
+	position: absolute;
+	left: 10%;
+	bottom: 5%;
+}
+.display1 {
+	height: 400px;
+}
+.display2 {
+	height: 400px;
+	overflow: auto;
+}
+.itemDisplay {
+	height: 100px;
+	border-width: 1px;
+	border-color: lightgray;
+	border: solid;
+	font-size: 200%;
+	line-height: 50px;
+	text-align: center;
+}
+.imgWrap {
+	padding: 0px;
+	margin: 0px;
+}
+.image {
+	padding: 0px;
+ 	vertical-align: middle;
+}
+.weatherWrap {
+	top: 20px;
+	left: 5px;
+}

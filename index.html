@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Travel Bear</title>
+
+  <!-- <script src="//<a href='http://www.jqueryscript.net/tags.php?/map/'>map</a>s.googleapis.com/maps/api/js?libraries=places"></script> -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+  <script type="text/javascript" src="https://api.eventful.com/js/api"></script>
+</head>
+<body>
+
+  <div class="w3-sidebar w3-bar-block w3-card-3 w3-animate-right" style="display:none" id="mySidebar">
+    <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
+    <a href="#" class="w3-bar-item w3-button">Link 1</a>
+    <a href="#" class="w3-bar-item w3-button">Link 2</a>
+    <a href="#" class="w3-bar-item w3-button">Link 3</a>
+  </div>
+  <div class="w3-bar TBnavbar">
+    <a href="#" class="w3-bar-item w3-button NBbutton" style="text-decoration: none" id="NBname"><img style="max-width:35px; margin-top: -7px;" src="assets/images/basichatbear.png"><strong>Travel</strong>Bear</a>
+    <input class="pull-right" id="autocomplete" name="search" type="text" placeholder="Search for a City"><input id="search_submit" value="Rechercher" type="submit">
+
+  <!--   <input type="text" class="w3-bar-item w3-input barsearch" placeholder="Search a City">
+    <a href="#" class="w3-bar-item w3-button w3-green">Go</a> -->
+      
+    <button class="w3-button w3-medium pull-right" id="hamburger" onclick="w3_open()">&#9776;</button>
+  </div>
+  <div class="page-wrap" id="main" zclass="w3-main">
+
+  <div class="row" id="alldata">
+    <div class="leftColumn col-sm-6">
+      <div class="w3-card" id="infocarddiv">
+        <div class="row header">
+          <div class="col-sm-8" id="weather">Weather</div>
+          <div class="col-sm-4" id="time">Current Time</div>
+        </div>
+        <div class="wrapper">
+          <div id="weather"><span id="weatherimg"></span><span id="weatherdata"></span><span id="currenttime"></span></div>
+        </div>
+        <div class="row header">City Info</div>
+          <div class="wrapper">
+            <img id="cityimage" height="200px" width="300px"></img>
+            <!-- <div class="row" id="cityfacts">
+              <div class="col-sm-4">
+                <ul style="list-style: none; padding-left: 0px">
+                  <li>Population: <span id="population"></span></li>
+                  <li>County: <span id="county"></span></li>
+                  <li>Elevation: <span id="elevation"></span></li>
+                </ul>
+              </div>
+              <div class="col-sm-8">
+                <ul style="list-style: none">
+                  <li>Neighborhoods: <span id="neighborhoods"></span></li>
+                  <li>Established: <span id="established"></span></li>
+                </ul>
+              </div> 
+              <hr> -->
+            </div>
+            <div class="row">
+              <div class="wrapper">
+                <p id="cityblurb">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. </p>
+              </div>
+            </div>
+           
+          <div class="row header"></div>
+            <div class="wrapper">
+              <div id="map"></div>
+            </div>
+          </div>  
+        </div>
+        
+        <div class="col-sm-6">
+          <div class="w3-card" id="infocardRight">
+            <div class="row header" id="hotels">Hotels
+              <div class="wrapper"><p>Hotel images are appended here</p>
+              </div>
+            </div>
+          </div>
+
+          <!--     NEW CARD -->
+          <div class="w3-card" id="infocardRight">
+            <div class="row header">Food
+              <div class="wrapper">
+              <p>Food images are appended here</p>
+              </div>
+            </div>
+          </div> 
+          <!--     NEW CARD -->
+          <div class="w3-card" id="infocardRight">
+            <div class="row header">Entertainment
+              <div class="wrapper">
+              <p>Entertainment images are appended here</p>
+              </div>
+            </div>
+          </div> 
+        </div> <!-- END OF COLUMN /DIV -->
+      </div>
+      </div> <!-- END OF ALLDATA /DIV -->
+    </div> <!-- END OF PAGE WRAP DIV -->
+
+<!-- This is your basic card skeleton
+
+<div class="w3-card" id="infocarddiv">
+  <div class="row header">
+    <div id="wrapper">
+    </div>
+  </div>
+</div> 
+                    Copy and paste above code to create a new info card-->
+  
+  
+  </div> <!-- page wrap ends here -->
+
+  <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
