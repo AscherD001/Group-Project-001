@@ -159,6 +159,7 @@ function citySearch() {
 		var zLevel = 13;
 		// marker zoom
 		// var zLevel = 17;
+		console.log(data)
 		updateMap(loc.lat, loc.lng, zLevel);
 		var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 		addPlaces(latLng);
