@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
   <script type="text/javascript" src="https://api.eventful.com/js/api"></script>
+  <script src="assets/javascript/zomato.js" type="application/javascript"></script>
 </head>
 <body>
 
@@ -39,13 +40,20 @@
     <div class="leftColumn col-sm-6">
       <div class="w3-card" id="infocarddiv">
         <div class="row header">
-          <div class="col-sm-8" id="weather">Weather</div>
-          <div class="col-sm-4" id="time">Current Time</div>
+          <div class="topText col-sm-5" id="weather">Weather</div>
+          <div class="col-sm-6" id="time">Current Time</div>
         </div>
-        <div class="wrapper">
-          <div id="weather"><span id="weatherimg"></span><span id="weatherdata"></span><span id="currenttime"></span></div>
+        <div class="wrapper container">
+          <div id="weather row">
+            <div id="image" class="col-xs-12">
+              <img class='weatherImg' src="">
+              <h2 class='temp'></h2>
+              <div class='clock'></div></img>
+            </div>
+            <span id="currenttime"></span>
+          </div>
         </div>
-        <div class="row header">City Info</div>
+        <div class="city row header">City Info</div>
           <div class="wrapper">
             <img id="cityimage" height="200px" width="300px"></img>
             <!-- <div class="row" id="cityfacts">
@@ -77,8 +85,9 @@
           </div>  
         </div>
         
-        <div class="col-sm-6">
-          <div class="w3-card" id="infocardRight">
+        
+        <div class="rightColumn col-sm-6">
+          <div class="w3-card infocardRight" id="hotelBtn">
             <div class="row header" id="hotels">Hotels
               <div class="wrapper"><p>Hotel images are appended here</p>
               </div>
@@ -86,7 +95,7 @@
           </div>
 
           <!--     NEW CARD -->
-          <div class="w3-card" id="infocardRight">
+          <div class="w3-card infocardRight" id="foodBtn">
             <div class="row header">Food
               <div class="wrapper">
               <p>Food images are appended here</p>
@@ -94,13 +103,15 @@
             </div>
           </div> 
           <!--     NEW CARD -->
-          <div class="w3-card" id="infocardRight">
+          <div class="w3-card infocardRight" id="entBtn">
             <div class="row header">Entertainment
               <div class="wrapper">
               <p>Entertainment images are appended here</p>
               </div>
             </div>
           </div> 
+          <div class="container" id="rightCol">
+          </div>
         </div> <!-- END OF COLUMN /DIV -->
       </div>
       </div> <!-- END OF ALLDATA /DIV -->
@@ -120,6 +131,6 @@
   </div> <!-- page wrap ends here -->
 
   <script type="text/javascript" src="assets/javascript/app.js"></script>
-
+  <script type="text/javascript" src="assets/javascript/moment.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
