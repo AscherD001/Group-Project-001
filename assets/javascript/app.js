@@ -301,7 +301,7 @@ function zomatoSearch(lat, lng) {
     });
 }
 function weatherCall() {
-	var queryURL = "http://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + cityState[1] + "/" + cityState[0] + ".json"
+	var queryURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + cityState[1] + "/" + cityState[0] + ".json"
 
 	$.ajax({
 		url : queryURL,
