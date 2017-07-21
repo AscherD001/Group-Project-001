@@ -7,8 +7,7 @@ var foodArr = [];
 var markers = [];
 var markerArr = [];
 var events = [];
-var eventMarkers = [];
-var eventsMarkerArr = [];
+var eventsArr = [];
 var places = [];
 var placesArr = [];
 var newMap = {
@@ -57,9 +56,11 @@ function addPlaceMarkers() {
 		if(count == 0) {
 			clearInterval(displayPlaces);
 		}
-		console.log(places[count].name);
+		// console.log(places[count].name);
 		var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
 		$("#hotImage").append(newItem);
+		$("#fooImage").empty();
+		$("#entImage").empty();
 	}, 125);
 }
 function addEventMarkers() {
@@ -70,13 +71,13 @@ function addEventMarkers() {
 	    anchor: new google.maps.Point(25, 50)
 	}
 	var count = 10;
-	if(food.length < 10) {
-		count = food.length;
+	if(events.length < 10) {
+		count = events.length;
 	}
 	var displayMarkers = setInterval(function() {
 		count --;
-		var lat = food[count].latitude;
-		var lng = food[count].longitude;
+		var lat = events[count].latitude;
+		var lng = events[count].longitude;
 		var latLng = new google.maps.LatLng(lat, lng);
 		var marker = new google.maps.Marker({
 		    position: latLng,
@@ -85,16 +86,18 @@ function addEventMarkers() {
 		    animation: google.maps.Animation.DROP,
 		    clickable: true
 		});
-		foodArr.push(marker);
-		if(food[count]) {
+		eventsArr.push(marker);
+		if(events[count]) {
 			// console.log(markers[count]);
-			var content = food[count].title; // + "<br>" + food[count].vicinity + "<br>" + food[count].types;
+			var content = events[count].title; // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
 			windowInfoCreate(marker, latLng, content);
 		}
 		if(count == 0) {
 			clearInterval(displayMarkers);
 		}
-		$("#entImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + food[count].title + '</p></div></div></div>'));
+		$("#entImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + events[count].title + '</p></div></div></div>'));
+		$("#fooImage").empty();
+		$("#hotImage").empty();
 	}, 125);
 }
 function addFoodMarkers() {
@@ -104,7 +107,7 @@ function addFoodMarkers() {
 	    origin: new google.maps.Point(0, 0),
 	    anchor: new google.maps.Point(25, 50)
 	}
-	console.log(food[0]);
+	// console.log(food[0]);
 	var count = 10;
 	if(food.length < 10) {
 		count = food.length;
@@ -131,6 +134,8 @@ function addFoodMarkers() {
 			clearInterval(displayMarkers);
 		}
 		$("#fooImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + food[count].name + '</p></div></div></div>'));
+		$("#hotImage").empty();
+		$("#entImage").empty();
 	}, 125);
 }
 function searchPlaces(results, status) {
@@ -183,14 +188,13 @@ function updateMap(lat, lng, zLevel) {
 
 // geocode api request for lat lng of input field value
 function citySearch() {
-	clearMarkers(eventsMarkerArr);
+	clearMarkers(eventsArr);
 	clearMarkers(placesArr);
 	clearMarkers(foodArr);
 	food = [];
 	foodArr = [];
 	events = [];
-	eventMarkers = [];
-	eventsMarkerArr = [];
+	eventsArr = [];
 	places = [];
 	placesArr = [];
 	var query = fullName;
@@ -270,21 +274,21 @@ $(".infocardRight").on("click", function() {
 
 	if($(this).attr("id") == "hotelBtn") {
 		clearMarkers(placesArr);
-		clearMarkers(eventsMarkerArr);
+		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
 
 		addPlaceMarkers();
 	}
 	if($(this).attr("id") == "entBtn") {
 		clearMarkers(placesArr);
-		clearMarkers(eventsMarkerArr);
+		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
 
 		addEventMarkers();
 	}
 	if($(this).attr("id") == "foodBtn") {
 		clearMarkers(placesArr);
-		clearMarkers(eventsMarkerArr);
+		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
 
 		addFoodMarkers();
