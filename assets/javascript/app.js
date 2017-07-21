@@ -59,7 +59,7 @@ function addPlaceMarkers() {
 		}
 		console.log(places[count].name);
 		var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
-		$("#rightCol").append(newItem);
+		$("#hotImage").append(newItem);
 	}, 125);
 }
 function addEventMarkers() {
@@ -70,13 +70,13 @@ function addEventMarkers() {
 	    anchor: new google.maps.Point(25, 50)
 	}
 	var count = 10;
-	if(events.length < 10) {
-		count = events.length;
+	if(food.length < 10) {
+		count = food.length;
 	}
 	var displayMarkers = setInterval(function() {
 		count --;
-		var lat = events[count].latitude;
-		var lng = events[count].longitude;
+		var lat = food[count].latitude;
+		var lng = food[count].longitude;
 		var latLng = new google.maps.LatLng(lat, lng);
 		var marker = new google.maps.Marker({
 		    position: latLng,
@@ -85,16 +85,52 @@ function addEventMarkers() {
 		    animation: google.maps.Animation.DROP,
 		    clickable: true
 		});
-		eventsMarkerArr.push(marker);
-		if(events[count]) {
+		foodArr.push(marker);
+		if(food[count]) {
 			// console.log(markers[count]);
-			var content = events[count].title; // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
+			var content = food[count].title; // + "<br>" + food[count].vicinity + "<br>" + food[count].types;
 			windowInfoCreate(marker, latLng, content);
 		}
 		if(count == 0) {
 			clearInterval(displayMarkers);
 		}
-		$(".rightCol").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + events[count].title + '</p></div></div></div>'));
+		$("#entImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + food[count].title + '</p></div></div></div>'));
+	}, 125);
+}
+function addFoodMarkers() {
+	icon = {
+	    url: "assets/images/markBear.png",
+	    scaledSize: new google.maps.Size(50, 50),
+	    origin: new google.maps.Point(0, 0),
+	    anchor: new google.maps.Point(25, 50)
+	}
+	console.log(food[0]);
+	var count = 10;
+	if(food.length < 10) {
+		count = food.length;
+	}
+	var displayMarkers = setInterval(function() {
+		count --;
+		var lat = food[count].latitude;
+		var lng = food[count].longitude;
+		var latLng = new google.maps.LatLng(lat, lng);
+		var marker = new google.maps.Marker({
+		    position: latLng,
+		    map: map,
+		    icon: icon,
+		    animation: google.maps.Animation.DROP,
+		    clickable: true
+		});
+		foodArr.push(marker);
+		if(food[count]) {
+			// console.log(markers[count]);
+			var content = food[count].name; // + "<br>" + food[count].vicinity + "<br>" + food[count].types;
+			windowInfoCreate(marker, latLng, content);
+		}
+		if(count == 0) {
+			clearInterval(displayMarkers);
+		}
+		$("#fooImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + food[count].name + '</p></div></div></div>'));
 	}, 125);
 }
 function searchPlaces(results, status) {
