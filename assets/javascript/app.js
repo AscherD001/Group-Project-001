@@ -388,7 +388,7 @@ function zomatoCityRestaurants(entityId,entityType) {
     beginConvert = convertMonth + '01';
     end = convertMonth + '28';
   
-    var monthlyURL = "http://api.wunderground.com/api/49f1eacd626559d9/planner_"+beginConvert+end+"/q/" + stAbbr + "/" + city + ".json"
+    var monthlyURL = "https://api.wunderground.com/api/49f1eacd626559d9/planner_"+beginConvert+end+"/q/" + stAbbr + "/" + city + ".json"
     $.ajax({
       url : monthlyURL,
       dataType : "jsonp",
@@ -409,7 +409,7 @@ function zomatoCityRestaurants(entityId,entityType) {
   }
 
   function currentWeather() {
-    var currentURL = "http://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + stAbbr + "/" + city + ".json"
+    var currentURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + stAbbr + "/" + city + ".json"
 
     $.ajax({
       url : currentURL,
@@ -431,7 +431,7 @@ function zomatoCityRestaurants(entityId,entityType) {
   } 
 function weatherCall(lat,lon) {
 	// debugger;
-  var queryURL = "http://api.wunderground.com/api/49f1eacd626559d9/geolookup/q/" + lat + "," + lon + ".json"
+  var queryURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/q/" + lat + "," + lon + ".json"
    $.ajax({
     url : queryURL,
     dataType : "jsonp",
