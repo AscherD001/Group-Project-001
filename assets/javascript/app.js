@@ -62,8 +62,9 @@ function addPlaceMarkers() {
 			clearInterval(displayPlaces);
 		}
 		// console.log(places[count].name);
-		var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
-		$("#hotImage").append(newItem);
+		// $("#hotImage").append(newItem);
+		// var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
+		$("#hotImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + places[count].name + '</p></div></div></div>'));
 		$("#fooImage").empty();
 		$("#entImage").empty();
 	}, 125);
