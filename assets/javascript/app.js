@@ -1,14 +1,23 @@
 // API key
 var mapsKey = "AIzaSyCdasgXLKtxe1vhh8nU7KP3tgCYB8o2yZg";
-var map, icon, city, state, fullName;
+var map, icon, fullName;
+var cityState = [];
+//zomato
+var lat,lon,entityId,entityType;
+var food = [];
+var foodArr = [];
+//weather
+var stAbbr,city;
 var markers = [];
 var markerArr = [];
 var events = [];
-var eventMarkers = [];
-var eventsMarkerArr = [];
+var eventsArr = [];
+var places = [];
+var placesArr = [];
 var newMap = {
 	center: {lat: 35.2271, lng: -80.8431},
-	zoom: 8
+	zoom: 8,
+	scrollwheel:  false
 };
 $("#cityimage").attr("src", "assets/images/placeholderCity.jpg");
 function windowInfoCreate(marker, location, content) {
@@ -21,7 +30,7 @@ function windowInfoCreate(marker, location, content) {
 		infoWindow.open(map);
 	});
 }
-function addMarker() {
+function addPlaceMarkers() {
 	icon = {
 	    url: "assets/images/markBear.png",
 	    scaledSize: new google.maps.Size(50, 50),
@@ -29,12 +38,13 @@ function addMarker() {
 	    anchor: new google.maps.Point(25, 50)
 	}
 	var count = 10;
-	if(markers.length < 10) {
-		count = markers.length;
+	// console.log(places);
+	if(places.length < 10) {
+		count = places.length;
 	}
-	var displayMarkers = setInterval(function() {
+	var displayPlaces = setInterval(function() {
 		count --;
-		var location = markers[count].geometry.location;
+		var location = places[count].geometry.location;
 		var marker = new google.maps.Marker({
 		    position: location,
 		    map: map,
@@ -42,18 +52,20 @@ function addMarker() {
 		    animation: google.maps.Animation.DROP,
 		    clickable: true
 		});
-		markerArr.push(marker);
-		if(markers[count]) {
-			// console.log(markers[count]);
-			var content = markers[count].name + "<br>" + markers[count].vicinity + "<br>" + markers[count].types;
+		placesArr.push(marker);
+		if(places[count]) {
+			var content = places[count].name + "<br>" + places[count].vicinity + "<br>" + places[count].types;
 			windowInfoCreate(marker, location, content);
 		}
 		if(count == 0) {
-			clearInterval(displayMarkers);
+			clearInterval(displayPlaces);
 		}
-		$(".display2").append($("<div class='itemDisplay'>" + markers[count].name + "</div>"))
+		// console.log(places[count].name);
+		var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
+		$("#hotImage").append(newItem);
+		$("#fooImage").empty();
+		$("#entImage").empty();
 	}, 125);
-		
 }
 function addEventMarkers() {
 	icon = {
@@ -68,8 +80,6 @@ function addEventMarkers() {
 	}
 	var displayMarkers = setInterval(function() {
 		count --;
-		// console.log(events);
-		// console.log(events[0].latitude);
 		var lat = events[count].latitude;
 		var lng = events[count].longitude;
 		var latLng = new google.maps.LatLng(lat, lng);
@@ -80,7 +90,7 @@ function addEventMarkers() {
 		    animation: google.maps.Animation.DROP,
 		    clickable: true
 		});
-		eventsMarkerArr.push(marker);
+		eventsArr.push(marker);
 		if(events[count]) {
 			// console.log(markers[count]);
 			var content = events[count].title; // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
@@ -89,36 +99,74 @@ function addEventMarkers() {
 		if(count == 0) {
 			clearInterval(displayMarkers);
 		}
-		$(".display2").append($("<div class='itemDisplay'>" + events[count].title + "</div>"))
+		$("#entImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + events[count].title + '</p></div></div></div>'));
+		$("#fooImage").empty();
+		$("#hotImage").empty();
+	}, 125);
+}
+function addFoodMarkers() {
+	icon = {
+	    url: "assets/images/markBear.png",
+	    scaledSize: new google.maps.Size(50, 50),
+	    origin: new google.maps.Point(0, 0),
+	    anchor: new google.maps.Point(25, 50)
+	}
+	// console.log(food[0]);
+	var count = 10;
+	if(food.length < 10) {
+		count = food.length;
+	}
+	var displayMarkers = setInterval(function() {
+		count --;
+		debugger;
+		var lat = food[count].location.latitude;
+		var lng = food[count].location.longitude;
+		var latLng = new google.maps.LatLng(lat, lng);
+		var marker = new google.maps.Marker({
+		    position: latLng,
+		    map: map,
+		    icon: icon,
+		    animation: google.maps.Animation.DROP,
+		    clickable: true
+		});
+		foodArr.push(marker);
+		if(food[count]) {
+			// console.log(markers[count]);
+			var content = food[count].name; // + "<br>" + food[count].vicinity + "<br>" + food[count].types;
+			windowInfoCreate(marker, latLng, content);
+		}
+		if(count == 0) {
+			clearInterval(displayMarkers);
+		}
+		$("#fooImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + food[count].name + '</p></div></div></div>'));
+		$("#hotImage").empty();
+		$("#entImage").empty();
 	}, 125);
 }
 function searchPlaces(results, status) {
 	if(status == google.maps.places.PlacesServiceStatus.OK) {
 		for(var i = 0; i < results.length; i++) {
 			var place = results[i];
-			markers.push(place);
+			places.push(place);
 		}
 		// var test = markers[0].photos[0].getUrl();
-		addMarker();
 	}
 }
-function addEvents() {
-	for(var i = 0; i < events.length; i ++) {
-		var place = events[i];
-		eventMarkers.push(place);
-	}
-
-}
+// function addEvents() {
+// 	for(var i = 0; i < events.length; i ++) {
+// 		var place = events[i];
+// 		eventMarkers.push(place);
+// 	}
+// }
 function addPlaces(latLng) {
-	var places = new google.maps.places.PlacesService(map);
-	console.log(places);
+	var googlePlaces = new google.maps.places.PlacesService(map);
 	// 1609.34 is one mile in meters
 	var request = {
 		location: latLng,
 		radius: 5000,
 		types: ["lodging"]
 	};
-	places.nearbySearch(request, searchPlaces);
+	googlePlaces.nearbySearch(request, searchPlaces);
 }
 function initMap() {
   	map = new google.maps.Map(document.getElementById("map"), newMap);
@@ -140,19 +188,31 @@ function updateMap(lat, lng, zLevel) {
   	var center = new google.maps.LatLng(lat, lng);
     map.panTo(center);
     map.setZoom(zLevel);
+    scrollwheel:  false;
 }
 
 // geocode api request for lat lng of input field value
 function citySearch() {
-	$(".display2").empty();
-	clearMarkers();
-	markers = [];
-	markerArr = [];
+	clearMarkers(eventsArr);
+	clearMarkers(placesArr);
+	clearMarkers(foodArr);
+	food = [];
+	foodArr = [];
+	events = [];
+	eventsArr = [];
+	places = [];
+	placesArr = [];
 	var query = fullName;
 	var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&sensor=false";
 	$.get(queryURL, function(data) {
 		// holds lat and lng values
 		var loc = data.results[0].geometry.location;
+		cityState = data.results[0].formatted_address.split(", ");
+		cityState[1] = cityState[1].substring(0, 2);
+
+		// for(var i = 0; i < cityState.length; i ++) {
+		// 	cityState[i] = cityState[i].split(",");
+		// }
 		// prepares the zoom level
 		// var zLevel = scope(data);
 		// city level
@@ -164,33 +224,25 @@ function citySearch() {
 		var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 		addPlaces(latLng);
 		eventSearch(loc.lat, loc.lng);
-		city = data.results[0].address_components[0].long_name;
-		if(data.results[0].address_components.length >= 5) {
-			state = data.results[0].address_components[3].short_name;
-			if(data.results[0].address_components.length == 7){
-				state = data.results[0].address_components[4].short_name;
-			}
-		} else {
-			state = data.results[0].address_components[2].short_name
-		}
-		
-		// console.log("City: " + city + " State: " + state);
+		zomatoCitySearch(loc.lat,loc.lng);
+		weatherCall(loc.lat,loc.lng);
 		// enables CSE search off for testing
 		// cseSearch(query);
 		// capatilizes the first letter and updates headline html
-		$(".headline").html(city + ", " + state);
+		$(".city").html(cityState[0] + ", " + cityState[1]);
 		// clears the search box after submit
 		// $("#autocomplete").val("");
+		var realClock = setInterval(realTime, 100);
 	});
-	
 }
+
 function eventSearch(lat, lng) {
 	var oArgs = { 
     	app_key: "2pRpwC3ck9hKHFqh", 
     	q:"music",
     	// "35.2270869"+"," + "-80.8431267", - charlotte
     	location: lat +"," + lng,
-    	within: 25,
+    	within: 10,
     	date: "This Week",
     	// "All", "Future", "Past", "Today", "Last Week", "This Week", "Next week", and months by name
     	// 'YYYYMMDD00-YYYYMMDD00', for example '2012042500-2012042700'; the last two digits of each date in this format are ignored. 
@@ -207,24 +259,47 @@ function eventSearch(lat, lng) {
 			var place = event[i];
 			events.push(place);
 		}
-		addEventMarkers();
     });
 }
 
 // Sets the map on all markers in the array.
-function setMapOnAll(map) {
-	for (var i = 0; i < markerArr.length; i++) {
-	  markerArr[i].setMap(map);
+function setMapOnAll(map, arr) {
+	for (var i = 0; i < arr.length; i++) {
+	  arr[i].setMap(map);
 	}
 }
 // Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-	setMapOnAll(null);
+function clearMarkers(arr) {
+	setMapOnAll(null, arr);
 }
+
 // loads the map into html after the page has loaded
 $("body").append($('<script class="customMap" async defer src="https://maps.googleapis.com/maps/api/js?key=' + mapsKey + '&libraries=places&callback=initMap"></script>'));
 // geocode api request for lat lng of input field value
-// $(".searchButton").on("click", citySearch);
+$(".infocardRight").on("click", function() {
+
+	if($(this).attr("id") == "hotelBtn") {
+		clearMarkers(placesArr);
+		clearMarkers(eventsArr);
+		clearMarkers(foodArr);
+
+		addPlaceMarkers();
+	}
+	if($(this).attr("id") == "entBtn") {
+		clearMarkers(placesArr);
+		clearMarkers(eventsArr);
+		clearMarkers(foodArr);
+
+		addEventMarkers();
+	}
+	if($(this).attr("id") == "foodBtn") {
+		clearMarkers(placesArr);
+		clearMarkers(eventsArr);
+		clearMarkers(foodArr);
+
+		addFoodMarkers();
+	}		
+});
 // allows for Enter key to submit input field value
 // $("#autocomplete").keyup(function(event){
 //     if(event.keyCode == 13){
@@ -253,6 +328,145 @@ function cseSearch(query) {
 	});	
 }
 
+function zomatoCitySearch(lat,lon) {
+
+    Zomato.init({
+        key: "d150aa87132f13a2b96ee66a7f926f6f"
+    });
+    
+    Zomato.locations({
+        //replace query with the city name from google search
+        query: "",
+        //replace with the lat/long variables
+        lat: lat, 
+        lon: lon,
+        //returns the first matching city
+        count: 1
+    }, function(data) {
+        // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
+        console.log(data)
+        // debugger;
+        //need these to run the locationsDetails function
+        entityId = data.location_suggestions[0].entity_id;
+        entityType = data.location_suggestions[0].entity_type;
+        zomatoCityRestaurants(entityId,entityType);
+        // geocode();
+    });
+};
+
+function zomatoCityRestaurants(entityId,entityType) {   
+	
+    Zomato.locationsDetails({
+        entity_id: entityId,
+        entity_type: entityType,
+    }, function(data) {
+        // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
+        console.log(data)
+        debugger;
+        console.log(entityId)
+        console.log(entityType)
+
+         for(var i = 0; i < data.best_rated_restaurant.length; i++) {
+        	// console.log(data.nearby_restaurants[i].restaurant.name);
+			var place = data.best_rated_restaurant[i].restaurant;
+			food.push(place);
+		}
+    });
+};
+
+
+  function monthlyWeather() {
+  	var d = new Date();
+    var n = d.getMonth()
+    var month = n + 1;
+    if (month < 9) {
+    	convertMonth = "0" + month
+    } else {
+    	convertMonth = month
+    }
+  	// var begin = String(startDateData);
+    beginConvert = convertMonth + '01';
+    end = convertMonth + '28';
+  
+    var monthlyURL = "http://api.wunderground.com/api/49f1eacd626559d9/planner_"+beginConvert+end+"/q/" + stAbbr + "/" + city + ".json"
+    $.ajax({
+      url : monthlyURL,
+      dataType : "jsonp",
+      success : function(data) {
+        // debugger;
+        console.log(data)
+        console.log(monthlyURL);
+        var low = data['trip']['temp_low']['avg']['F'];
+        var high = data['trip']['temp_high']['avg']['F'];
+        var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
+        // $('#imageOne').append()
+        // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
+        // $('#imageOne').append("<h3>Average low "+low+" F°</h3>")
+        // $('#imageOne').append("<h3>Average high "+high+" F°</h3>")
+        // $('#imageOne').append("<h3>Chance of precipitation "+chance+" %</h3>");
+      }
+    });
+  }
+
+  function currentWeather() {
+    var currentURL = "http://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + stAbbr + "/" + city + ".json"
+
+    $.ajax({
+      url : currentURL,
+      dataType : "jsonp",
+      success : function(data) {
+        // debugger;
+        console.log(data)
+        console.log(currentURL);
+        var location = data['location']['city'];
+        var temp_f = data['current_observation']['temp_f'];
+        var image = data['current_observation']['icon_url'];
+        var conditions = data['current_observation']['weather']; 
+       
+        $(".weatherImg").attr("src", image);
+        $(".temp").html(temp_f + "&#8457");
+        // $('#imageTwo').append("<h3>The current condition is "+ conditions.toLowerCase() +".</h3>")
+      }
+      });
+  } 
+function weatherCall(lat,lon) {
+	// debugger;
+  var queryURL = "http://api.wunderground.com/api/49f1eacd626559d9/geolookup/q/" + lat + "," + lon + ".json"
+   $.ajax({
+    url : queryURL,
+    dataType : "jsonp",
+    success : function(data) {
+      console.log(data)
+      console.log(queryURL);
+     
+      stAbbr = data.location.state
+      city = data.location.city
+      //add to divs
+      // $("#imageOne").before("<div id='image'>")
+      // $('#image').append("<h2>"+ city + "," + stAbbr +"</h2>")
+      monthlyWeather();
+      currentWeather();
+    }
+  });
+
+}
+
+// function weatherCall() {
+// 	var queryURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + cityState[1] + "/" + cityState[0] + ".json"
+
+// 	$.ajax({
+// 		url : queryURL,
+// 		dataType : "jsonp",
+// 		success : function(data) {
+// 			var location = data['location']['city'];
+// 			var temp_f = data['current_observation']['temp_f'];
+// 			var image = data['current_observation']['icon_url'];
+// 			var conditions = data['current_observation']['weather'];  
+// 			$(".weatherImg").attr("src", image);
+// 			$(".temp").html(temp_f + "&#8457");
+// 		}
+// 	});
+// }
 function w3_open() {
     document.getElementById("main").style.marginRignt = "25%";
     document.getElementById("mySidebar").style.width = "25%";
@@ -264,7 +478,10 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("openNav").style.display = "inline-block";
 }
-
+// updates the real time clock to within 1/10 of a second
+function realTime() {
+  	$(".clock").html(moment().format("HH:mm:ss"));
+}
 // Old Code That May Be Useful
 
 // function scope(data) {

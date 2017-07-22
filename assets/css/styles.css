@@ -142,14 +142,15 @@ margin-bottom: 10px;
 }
 #infocarddiv {
   margin-left: 80px;
-  margin-top: 25px;
+  margin-bottom: 5px;
   padding-bottom: 30px;
   background-color: rgba(255,255,255,0.86);
 }
-#infocardRight {
+.infocardRight {
   width: 80%;
   margin-left: 30px;
-  margin-top: 25px;
+  margin-top: 0px;
+  margin-bottom: 5px;
   padding-bottom: 30px;
   background-color: rgba(255,255,255,0.86);
 }
@@ -164,8 +165,6 @@ margin-bottom: 10px;
 #cityimage {
   width: 100%;
 }
-
-
 
 /*CODE PEN SEARCH*/
 
@@ -245,28 +244,83 @@ input[type="submit"]:hover {
   top: 0px;
   left: 0px;
 }
-.leftColumn {
-  height: 80%;
-}
 #cityblurb {
   padding: 3%;
 }
+.city {
+  margin-top: -5px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  margin-left: 30px;
+  font-size: 190%;
+}
+#image {
+  display: inline;
+}
+.weatherImg {
+  width: 50px;
+  float: left;
+  margin-left: -20px;
+}
+.temp {
+  float: left;
+  margin-left: 5px;
+}
+.topText {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+#time {
+  margin-top: 10px;
+}
+.itemDisplay {
+  height: 100px;
+  width: 100%;
+}
+.clock {
+  font-size: 200%;
+  margin-top: 5px;
+  margin-left: 40px;
+  float: left;
+}
 @media screen and (max-width: 767px) {
+  #main {
+    margin-top: 25px;
+  }
   #infocarddiv {
     width: 90%;
     margin-left: 5%;
-    margin-top: 25px;
     padding-bottom: 30px;
     background-color: rgba(255,255,255,0.86);
   }
-  #infocardRight {
+  .infocardRight {
     width: 90%;
     margin-left: 5%;
-    margin-top: 30px;
+    margin-top: 1px;
+    margin-bottom: 4px;
     padding-bottom: 30px;
     background-color: rgba(255,255,255,0.86);
   }
   #map {
     width: 100%;
   }
+}
+@media screen and (min-width: 768px) {
+#main {
+  margin-top: 25px;
+  height: 900px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.leftColumn {
+  height: 900px;
+  overflow: hidden;
+}
+.rightColumn {
+  height: 900px;
+  overflow: auto;
+}
+.hideScroll {
+  padding-right: 0px;
+  overflow: hidden;
 }
