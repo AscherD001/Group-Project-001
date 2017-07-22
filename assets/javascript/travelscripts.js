@@ -1,6 +1,6 @@
-console.log("text");
+console.log("test");
 
-$("#city-input #date-input").keyup(function(event){
+$("#city-input").keyup(function(event){
     if(event.keyCode == 13){
         $("#search").click();
     }
@@ -16,6 +16,16 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("openNav").style.display = "inline-block";
 }
+
+
+$( "#search" ).click(function() {
+   $( "#landingpage" ).fadeOut(2000, function(){
+      $("#main").fadeTo(2000, 1);
+   });
+});
+
+
+
 // var citylist =["Louisville,KY"];
 // function citySuggest() {
 //     // Declare variables
