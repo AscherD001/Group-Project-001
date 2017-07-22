@@ -9,6 +9,17 @@ a,
 span {
       font-family: 'Lato', sans-serif;
 }
+#main {
+  opacity:0;
+}
+/*#main:target {
+  -webkit-transition-delay: 2s;
+        -webkit-transition: opacity 2.0s ease-in;
+           -moz-transition: opacity 2.0s ease-in;
+             -o-transition: opacity 2.0s ease-in;
+                                      opacity: 1;
+    }
+*/
 #weather,
 #time {
   padding:0px;

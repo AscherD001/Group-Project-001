@@ -21,9 +21,9 @@
 
   <div class="w3-sidebar w3-bar-block w3-card-3 w3-animate-right" style="display:none" id="mySidebar">
     <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
-    <a href="#" class="w3-bar-item w3-button">Link 1</a>
-    <a href="#" class="w3-bar-item w3-button">Link 2</a>
-    <a href="#" class="w3-bar-item w3-button">Link 3</a>
+    <a href="#hotelBtn" class="page-scroll w3-bar-item w3-button">Hotels</a>
+    <a href="#foodBtn" class="page-scroll w3-bar-item w3-button">Food</a>
+    <a href="#entBtn" class="page-scroll w3-bar-item w3-button">Events</a>
   </div>
   <div class="w3-bar TBnavbar">
     <a href="#" class="w3-bar-item w3-button NBbutton" style="text-decoration: none" id="NBname"><img style="max-width:35px; margin-top: -7px;" src="assets/images/basichatbear.png"><strong>Travel</strong>Bear</a>
@@ -34,6 +34,19 @@
       
     <button class="w3-button w3-medium pull-right" id="hamburger" onclick="w3_open()">&#9776;</button>
   </div>
+  <div id="landingpage">
+    <div class="w3-card" id="displaydiv">
+      <img src="images/suitcasebear.png" height="110px" width="135px" id="homelogo"></img>
+      <h1 id="question">Where would you like to go?</h1>
+      <br>
+      <input id="autocomplete" autocomplete="on" placeholder="CITY, STATE"></input>
+      <!-- http://www.daterangepicker.com/  -->
+      <br>
+      <a class="page-scroll" id="search" >Go!</a>
+    <br>
+    <!-- <button id="search" href="https://wicked001.github.io/Google-API-Example001/">Go!</button>   -->    
+    </div> 
+  </div><!--  END OF #LANDINGPAGE DIV -->
   <div class="page-wrap" id="main" zclass="w3-main">
 
   <div class="row" id="alldata">
@@ -130,7 +143,7 @@
   
   
   </div> <!-- page wrap ends here -->
-
+  <script type="text/javascript" src="assets/javascript/travelscripts.js"></script>
   <script type="text/javascript" src="assets/javascript/app.js"></script>
   <script type="text/javascript" src="assets/javascript/moment.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
