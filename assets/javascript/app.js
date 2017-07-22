@@ -14,6 +14,7 @@ var events = [];
 var eventsArr = [];
 var places = [];
 var placesArr = [];
+var state = 0;
 var newMap = {
 	center: {lat: 35.2271, lng: -80.8431},
 	zoom: 8,
@@ -278,21 +279,33 @@ $("body").append($('<script class="customMap" async defer src="https://maps.goog
 // geocode api request for lat lng of input field value
 $(".infocardRight").on("click", function() {
 
-	if($(this).attr("id") == "hotelBtn") {
+	if($(this).attr("id") == "hotelBtn" && state != 1) {
+		state = 1;
+		$("#hotImage").empty();
+		$("#fooImage").empty();
+		$("#entImage").empty();
 		clearMarkers(placesArr);
 		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
 
 		addPlaceMarkers();
 	}
-	if($(this).attr("id") == "entBtn") {
+	if($(this).attr("id") == "entBtn" && state != 3) {
+		state = 3;
+		$("#hotImage").empty();
+		$("#fooImage").empty();
+		$("#entImage").empty();
 		clearMarkers(placesArr);
 		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
 
 		addEventMarkers();
 	}
-	if($(this).attr("id") == "foodBtn") {
+	if($(this).attr("id") == "foodBtn" && state != 2) {
+		state = 2;
+		$("#hotImage").empty();
+		$("#fooImage").empty();
+		$("#entImage").empty();
 		clearMarkers(placesArr);
 		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
