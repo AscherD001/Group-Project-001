@@ -1,5 +1,3 @@
-console.log("test");
-
 $("#city-input").keyup(function(event){
     if(event.keyCode == 13){
         $("#search").click();

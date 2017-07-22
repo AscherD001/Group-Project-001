@@ -125,6 +125,13 @@ function addFoodMarkers() {
 	var displayMarkers = setInterval(function() {	
 		var lat = food[count].location.latitude;
 		var lng = food[count].location.longitude;
+		if(parseInt(lat) == 0 || parseInt(lng) == 0 ) {
+
+			console.log("My lat and lng are 0.00000000! food[" + count + "]");
+			// setting their markers to charlotte center
+			lat = loc.lat;
+			lng = loc.lng;
+		}
 		var latLng = new google.maps.LatLng(lat, lng);
 		var marker = new google.maps.Marker({
 		    position: latLng,
@@ -183,12 +190,28 @@ function initMap() {
   			types: ["(cities)"],
   			componentRestrictions: {"country": "us"}
   		};
-  	var input = document.getElementById("autocomplete");
-  	var autocomplete = new google.maps.places.Autocomplete(input, options);
-  	google.maps.event.addListener(autocomplete, 'place_changed', function () {
-    	fullName = autocomplete.getPlace().formatted_address;
+	  	var input = document.getElementById("autocomplete");
+	  	var autocomplete = new google.maps.places.Autocomplete(input, options);
+	  	google.maps.event.addListener(autocomplete, 'place_changed', function () {
+			fullName = autocomplete.getPlace().formatted_address;
+			if(fullName) {
+				if(state === 0) {
+					$("#landingpage" ).fadeOut(2000, function(){
+      					$("#main").fadeTo(2000, 1);
+   					});
+				}
+				citySearch();
+			}
+		});
+		var input = document.getElementById("autocomplete1");
+	  	var autocomplete1 = new google.maps.places.Autocomplete(input, options);
+	  	google.maps.event.addListener(autocomplete1, 'place_changed', function () {
+    	fullName = autocomplete1.getPlace().formatted_address;
     	if(fullName) {
     		citySearch();
+    		$("#landingpage" ).fadeOut(2000, function(){
+      			$("#main").fadeTo(2000, 1);
+   			});
     	}
     	
 	});
@@ -205,7 +228,7 @@ function citySearch() {
 	$("#hotImage").empty();
 	$("#entImage").empty();
 	$("#fooImage").empty();
-	state = 0;
+	state = 4;
 	clearMarkers(eventsArr);
 	clearMarkers(placesArr);
 	clearMarkers(foodArr);
@@ -291,7 +314,7 @@ $("body").append($('<script class="customMap" async defer src="https://maps.goog
 // geocode api request for lat lng of input field value
 $(".infocardRight").on("click", function() {
 
-	if($(this).attr("id") == "hotelBtn" && state != 1) {
+	if($(this).attr("id") == "hotelBtn" && state != 1 && state != 0) {
 		state = 1;
 		$("#hotImage").empty();
 		$("#fooImage").empty();
@@ -302,7 +325,7 @@ $(".infocardRight").on("click", function() {
 		updateMap(loc.lat, loc.lng, 13);
 		addPlaceMarkers();
 	}
-	if($(this).attr("id") == "entBtn" && state != 3) {
+	if($(this).attr("id") == "entBtn" && state != 3 && state != 0) {
 		state = 3;
 		$("#hotImage").empty();
 		$("#fooImage").empty();
@@ -313,7 +336,7 @@ $(".infocardRight").on("click", function() {
 		updateMap(loc.lat, loc.lng, 13);
 		addEventMarkers();
 	}
-	if($(this).attr("id") == "foodBtn" && state != 2) {
+	if($(this).attr("id") == "foodBtn" && state != 2 && state != 0) {
 		state = 2;
 		$("#hotImage").empty();
 		$("#fooImage").empty();
@@ -347,8 +370,8 @@ function cseSearch(query) {
 	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
 	$.get(queryURL, function(data) {
 		cseData = data.items;
-		console.log(cseData);
-		console.log(data.items[0].pagemap.cse_image[0].src);
+		// console.log(cseData);
+		// console.log(data.items[0].pagemap.cse_image[0].src);
 	});	
 }
 // allows for Enter key to submit input field value

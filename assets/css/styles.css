@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   min-height: 100%;
+  overflow: hidden;
 }
 .header,
 p,
@@ -295,6 +296,11 @@ input[type="submit"]:hover {
   float: left;
 }
 @media screen and (max-width: 767px) {
+  html, body {
+    height: 100%;
+    min-height: 100%;
+    overflow: auto;
+}
   #main {
     margin-top: 25px;
   }
@@ -317,6 +323,11 @@ input[type="submit"]:hover {
   }
 }
 @media screen and (min-width: 768px) {
+  html, body {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
 #main {
   margin-top: 25px;
   height: 900px;
