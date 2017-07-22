@@ -1,6 +1,6 @@
 // API key
 var mapsKey = "AIzaSyCdasgXLKtxe1vhh8nU7KP3tgCYB8o2yZg";
-var map, icon, fullName;
+var map, icon, fullName, loc, cseData;
 var cityState = [];
 //zomato
 var lat,lon,entityId,entityType;
@@ -38,13 +38,13 @@ function addPlaceMarkers() {
 	    origin: new google.maps.Point(0, 0),
 	    anchor: new google.maps.Point(25, 50)
 	}
-	var count = 10;
+	var count = 0;
+	var max = 9;
 	// console.log(places);
 	if(places.length < 10) {
-		count = places.length;
+		max = places.length - 1;
 	}
 	var displayPlaces = setInterval(function() {
-		count --;
 		var location = places[count].geometry.location;
 		var marker = new google.maps.Marker({
 		    position: location,
@@ -55,18 +55,20 @@ function addPlaceMarkers() {
 		});
 		placesArr.push(marker);
 		if(places[count]) {
-			var content = places[count].name + "<br>" + places[count].vicinity + "<br>" + places[count].types;
+			var content = places[count].name + "<br>" + count + "<br>" + "<br>" + places[count].vicinity + "<br>" + places[count].types;
 			windowInfoCreate(marker, location, content);
 		}
-		if(count == 0) {
+		if(count == max) {
 			clearInterval(displayPlaces);
 		}
 		// console.log(places[count].name);
 		// $("#hotImage").append(newItem);
 		// var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
-		$("#hotImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + places[count].name + '</p></div></div></div>'));
+		var newDiv = $('<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' + places[count].name + '</p></div></div></div>');
+		$("#hotImage").append(newDiv);
 		$("#fooImage").empty();
 		$("#entImage").empty();
+		count ++;
 	}, 125);
 }
 function addEventMarkers() {
@@ -76,12 +78,12 @@ function addEventMarkers() {
 	    origin: new google.maps.Point(0, 0),
 	    anchor: new google.maps.Point(25, 50)
 	}
-	var count = 10;
+	var count = 0;
+	var max = 9;
 	if(events.length < 10) {
-		count = events.length;
+		max = events.length - 1;
 	}
 	var displayMarkers = setInterval(function() {
-		count --;
 		var lat = events[count].latitude;
 		var lng = events[count].longitude;
 		var latLng = new google.maps.LatLng(lat, lng);
@@ -98,12 +100,13 @@ function addEventMarkers() {
 			var content = events[count].title; // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
 			windowInfoCreate(marker, latLng, content);
 		}
-		if(count == 0) {
+		if(count == max) {
 			clearInterval(displayMarkers);
 		}
-		$("#entImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + events[count].title + '</p></div></div></div>'));
+		$("#entImage").append($('<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' + events[count].title + '</p></div></div></div>'));
 		$("#fooImage").empty();
 		$("#hotImage").empty();
+		count ++;
 	}, 125);
 }
 function addFoodMarkers() {
@@ -114,13 +117,12 @@ function addFoodMarkers() {
 	    anchor: new google.maps.Point(25, 50)
 	}
 	// console.log(food[0]);
-	var count = 10;
+	var count = 0;
+	var max = 9;
 	if(food.length < 10) {
-		count = food.length;
+		max = food.length - 1;
 	}
-	var displayMarkers = setInterval(function() {
-		count --;
-		debugger;
+	var displayMarkers = setInterval(function() {	
 		var lat = food[count].location.latitude;
 		var lng = food[count].location.longitude;
 		var latLng = new google.maps.LatLng(lat, lng);
@@ -137,13 +139,18 @@ function addFoodMarkers() {
 			var content = food[count].name; // + "<br>" + food[count].vicinity + "<br>" + food[count].types;
 			windowInfoCreate(marker, latLng, content);
 		}
-		if(count == 0) {
+		if(count == max) {
 			clearInterval(displayMarkers);
 		}
-		$("#fooImage").append($('<div class="w3-card infocardRight"><div class="row header"><div class="wrapper"><p>' + food[count].name + '</p></div></div></div>'));
+		$("#fooImage").append($('<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' + food[count].name + '</p></div></div></div>'));
 		$("#hotImage").empty();
 		$("#entImage").empty();
+		count ++;
 	}, 125);
+}
+function zoomMarker(markers, index) {
+	map.panTo(markers[index].getPosition());
+   	map.setZoom(17);
 }
 function searchPlaces(results, status) {
 	if(status == google.maps.places.PlacesServiceStatus.OK) {
@@ -195,6 +202,10 @@ function updateMap(lat, lng, zLevel) {
 
 // geocode api request for lat lng of input field value
 function citySearch() {
+	$("#hotImage").empty();
+	$("#entImage").empty();
+	$("#fooImage").empty();
+	state = 0;
 	clearMarkers(eventsArr);
 	clearMarkers(placesArr);
 	clearMarkers(foodArr);
@@ -208,7 +219,7 @@ function citySearch() {
 	var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&sensor=false";
 	$.get(queryURL, function(data) {
 		// holds lat and lng values
-		var loc = data.results[0].geometry.location;
+		loc = data.results[0].geometry.location;
 		cityState = data.results[0].formatted_address.split(", ");
 		cityState[1] = cityState[1].substring(0, 2);
 
@@ -221,13 +232,13 @@ function citySearch() {
 		var zLevel = 13;
 		// marker zoom
 		// var zLevel = 17;
-		console.log(data)
 		updateMap(loc.lat, loc.lng, zLevel);
 		var latLng = new google.maps.LatLng(loc.lat, loc.lng);
 		addPlaces(latLng);
 		eventSearch(loc.lat, loc.lng);
 		zomatoCitySearch(loc.lat,loc.lng);
 		weatherCall(loc.lat,loc.lng);
+		cseSearch(cityState[0] + " " + cityState[1]);
 		// enables CSE search off for testing
 		// cseSearch(query);
 		// capatilizes the first letter and updates headline html
@@ -288,7 +299,7 @@ $(".infocardRight").on("click", function() {
 		clearMarkers(placesArr);
 		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
-
+		updateMap(loc.lat, loc.lng, 13);
 		addPlaceMarkers();
 	}
 	if($(this).attr("id") == "entBtn" && state != 3) {
@@ -299,7 +310,7 @@ $(".infocardRight").on("click", function() {
 		clearMarkers(placesArr);
 		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
-
+		updateMap(loc.lat, loc.lng, 13);
 		addEventMarkers();
 	}
 	if($(this).attr("id") == "foodBtn" && state != 2) {
@@ -310,17 +321,24 @@ $(".infocardRight").on("click", function() {
 		clearMarkers(placesArr);
 		clearMarkers(eventsArr);
 		clearMarkers(foodArr);
-
+		updateMap(loc.lat, loc.lng, 13);
 		addFoodMarkers();
 	}		
 });
-// allows for Enter key to submit input field value
-// $("#autocomplete").keyup(function(event){
-//     if(event.keyCode == 13){
-//         $(".searchButton").click();
-//     }
-// });
-// CSE search for images temporarily disabled
+$(document).on("click", ".subInfocardRight", function() {
+	if(state == 1) {
+		var index = $(this).attr("data-index");
+		zoomMarker(placesArr, index);
+	}
+	if(state == 2) {
+		var index = $(this).attr("data-index");
+		zoomMarker(foodArr, index);
+	}
+	if(state == 3) {
+		var index = $(this).attr("data-index");
+		zoomMarker(eventsArr, index);
+	}
+});
 function cseSearch(query) {
 	var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
 	// var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
@@ -328,19 +346,38 @@ function cseSearch(query) {
 	// var query = prompt("Enter a Search");
 	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
 	$.get(queryURL, function(data) {
-		$(".display2").empty();
-		$("#banner").attr("background-image", "");
-		$("#banner").attr("style", "background-image: url('" + data.items[0].pagemap.cse_image[0].src + "')");
-		for(var i = 0; i < data.items.length; i ++) {
-			if(data.items[i].pagemap.cse_image) {
-				for(var j = 0; j < data.items[i].pagemap.cse_image.length; j ++) {
-					var temp = $("<div class='imgWrap col-xs-12'><img class='image col-xs-12' src='" + data.items[i].pagemap.cse_image[0].src + "'></div>");
-					$(".display2").append(temp);
-				}
-			}
-		}
+		cseData = data.items;
+		console.log(cseData);
+		console.log(data.items[0].pagemap.cse_image[0].src);
 	});	
 }
+// allows for Enter key to submit input field value
+// $("#autocomplete").keyup(function(event){
+//     if(event.keyCode == 13){
+//         $(".searchButton").click();
+//     }
+// });
+// CSE search for images temporarily disabled
+// function cseSearch(query) {
+// 	var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
+// 	// var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
+// 	var SEid = "004303949972187002826:5vg83odxtam";
+// 	// var query = prompt("Enter a Search");
+// 	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
+// 	$.get(queryURL, function(data) {
+// 		$(".display2").empty();
+// 		$("#banner").attr("background-image", "");
+// 		$("#banner").attr("style", "background-image: url('" + data.items[0].pagemap.cse_image[0].src + "')");
+// 		for(var i = 0; i < data.items.length; i ++) {
+// 			if(data.items[i].pagemap.cse_image) {
+// 				for(var j = 0; j < data.items[i].pagemap.cse_image.length; j ++) {
+// 					var temp = $("<div class='imgWrap col-xs-12'><img class='image col-xs-12' src='" + data.items[i].pagemap.cse_image[0].src + "'></div>");
+// 					$(".display2").append(temp);
+// 				}
+// 			}
+// 		}
+// 	});	
+// }
 
 function zomatoCitySearch(lat,lon) {
 
@@ -358,8 +395,7 @@ function zomatoCitySearch(lat,lon) {
         count: 1
     }, function(data) {
         // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
-        console.log(data)
-        // debugger;
+       
         //need these to run the locationsDetails function
         entityId = data.location_suggestions[0].entity_id;
         entityType = data.location_suggestions[0].entity_type;
@@ -375,10 +411,6 @@ function zomatoCityRestaurants(entityId,entityType) {
         entity_type: entityType,
     }, function(data) {
         // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
-        console.log(data)
-        debugger;
-        console.log(entityId)
-        console.log(entityType)
 
          for(var i = 0; i < data.best_rated_restaurant.length; i++) {
         	// console.log(data.nearby_restaurants[i].restaurant.name);
@@ -407,9 +439,6 @@ function zomatoCityRestaurants(entityId,entityType) {
       url : monthlyURL,
       dataType : "jsonp",
       success : function(data) {
-        // debugger;
-        console.log(data)
-        console.log(monthlyURL);
         var low = data['trip']['temp_low']['avg']['F'];
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
@@ -429,9 +458,6 @@ function zomatoCityRestaurants(entityId,entityType) {
       url : currentURL,
       dataType : "jsonp",
       success : function(data) {
-        // debugger;
-        console.log(data)
-        console.log(currentURL);
         var location = data['location']['city'];
         var temp_f = data['current_observation']['temp_f'];
         var image = data['current_observation']['icon_url'];
@@ -444,15 +470,12 @@ function zomatoCityRestaurants(entityId,entityType) {
       });
   } 
 function weatherCall(lat,lon) {
-	// debugger;
+
   var queryURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/q/" + lat + "," + lon + ".json"
    $.ajax({
     url : queryURL,
     dataType : "jsonp",
     success : function(data) {
-      console.log(data)
-      console.log(queryURL);
-     
       stAbbr = data.location.state
       city = data.location.city
       //add to divs

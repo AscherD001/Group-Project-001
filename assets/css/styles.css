@@ -154,6 +154,14 @@ margin-bottom: 10px;
   padding-bottom: 30px;
   background-color: rgba(255,255,255,0.86);
 }
+.subInfocardRight {
+  width: 80%;
+  margin-left: 30px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  padding-bottom: 30px;
+  background-color: rgba(255,255,255,0.86);
+}
 .wrapper {
   padding-left: 30px;
   padding-right: 30px;
@@ -294,6 +302,14 @@ input[type="submit"]:hover {
     background-color: rgba(255,255,255,0.86);
   }
   .infocardRight {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1px;
+    margin-bottom: 4px;
+    padding-bottom: 30px;
+    background-color: rgba(255,255,255,0.86);
+  }
+  .subInfocardRight {
     width: 90%;
     margin-left: 5%;
     margin-top: 1px;
