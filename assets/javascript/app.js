@@ -64,8 +64,19 @@ function addPlaceMarkers() {
 		// console.log(places[count].name);
 		// $("#hotImage").append(newItem);
 		// var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
-		var newDiv = $('<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' + places[count].name + '</p></div></div></div>');
-		$("#hotImage").append(newDiv);
+		//var newDiv = 
+		$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
+			+ count + '"><div class="row header"><div class="wrapper">' 
+			+ '<img src="' + places[count].icon + '">'
+			+ '<p>' + places[count].name + '</p>' 
+			+ '<p> Rating: ' + places[count].rating + '<p>'
+			+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
+		//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
+		//				+ places[count].name + '</p>'
+		//				+ '<img src="' + places[count].icon + '>'  
+		//				+ '<p>' + places[count].name + '</p>' 
+		//				+ '<p>' + places[count].rating + '</p>'  
+		//				+ '<p>' + places[count].vicinity + '</p></div></div></div>');
 		$("#fooImage").empty();
 		$("#entImage").empty();
 		count ++;
@@ -114,9 +125,7 @@ function addEventMarkers() {
 			+ '<p>' + events[count].venue_name + '<p>'
 			+ '<p class="description">' + events[count].description + '<p>' 
 			+ '<p>' + events[count].venue_address + ", " + events[count].postal_code + '<p>'
-			+ '<p>' + events[count].url +'<p></div></div></div>'));
-		
-
+			+ '<p><a href="'+events[count].url+'" target="_blank">More Info</a></p></div></div></div>'));
 
 		$("#fooImage").empty();
 		$("#hotImage").empty();
@@ -163,7 +172,12 @@ function addFoodMarkers() {
 		if(count == max) {
 			clearInterval(displayMarkers);
 		}
-		$("#fooImage").append($('<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' + food[count].name + '</p></div></div></div>'));
+		$("#fooImage").append('<div class="w3-card subInfocardRight" data-index="' 
+			+ count + '"><div class="row header"><div class="wrapper">' 
+			+ '<p>'+food[count].name +'</p>'
+			+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
+			+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
+			+ '<p> Location: ' + food[count].location.address + '</p></div></div>');
 		$("#hotImage").empty();
 		$("#entImage").empty();
 		count ++;
@@ -377,8 +391,9 @@ $(document).on("click", ".subInfocardRight", function() {
 	}
 });
 function cseSearch(query) {
-	var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
+	//var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
 	// var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
+	 var cseKey = "AIzaSyD_SVLOZ-31PIlN_XCdKJAYXlw5yHFvcUw"
 	var SEid = "004303949972187002826:5vg83odxtam";
 	// var query = prompt("Enter a Search");
 	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
