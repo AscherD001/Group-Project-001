@@ -174,6 +174,7 @@ function addFoodMarkers() {
 		}
 		$("#fooImage").append('<div class="w3-card subInfocardRight" data-index="' 
 			+ count + '"><div class="row header"><div class="wrapper">' 
+			+ '<img src="' + food[count].featured_image + '">'
 			+ '<p>'+food[count].name +'</p>'
 			+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
 			+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
