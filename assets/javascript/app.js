@@ -177,7 +177,7 @@ function addFoodMarkers() {
 		}
 		$("#fooImage").append('<div class="w3-card subInfocardRight" data-index="' 
 			+ count + '"><div class="row header"><div class="wrapper">' 
-			+ '<img src="' + food[count].featured_image + '">'
+			+ "<img class='img-responsive' src='" + food[count].featured_image + "'>"
 			+ '<p>'+food[count].name +'</p>'
 			+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
 			+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
@@ -322,6 +322,7 @@ function eventSearch(lat, lng) {
     	// page_number: 1 
     }; 
     EVDB.API.call("/events/search", oArgs, function(data) { 
+    	console.log(data);
     	var event = data.events.event;
   		for(var i = 0; i < event.length; i++) {
 			var place = event[i];
@@ -498,6 +499,7 @@ function zomatoCityRestaurants(entityId,entityType) {
         var low = data['trip']['temp_low']['avg']['F'];
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
+        console.log(data);
         // $('#imageOne').append()
         // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
         // $('#imageOne').append("<h3>Average low "+low+" F°</h3>")
