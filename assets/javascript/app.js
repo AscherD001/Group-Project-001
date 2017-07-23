@@ -103,7 +103,21 @@ function addEventMarkers() {
 		if(count == max) {
 			clearInterval(displayMarkers);
 		}
-		$("#entImage").append($('<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' + events[count].title + '</p></div></div></div>'));
+
+		if (events[count].description === null) { 
+			events[count].description = "see link for more details"
+		}
+		$("#entImage").append($('<div class="w3-card subInfocardRight" data-index="' 
+			+ count + '"><div class="row header"><div class="wrapper">' 
+			+ '<p>' + events[count].title + '</p>'
+			+ '<p>' + events[count].start_time + '<p>' 
+			+ '<p>' + events[count].venue_name + '<p>'
+			+ '<p class="description">' + events[count].description + '<p>' 
+			+ '<p>' + events[count].venue_address + ", " + events[count].postal_code + '<p>'
+			+ '<p>' + events[count].url +'<p></div></div></div>'));
+		
+
+
 		$("#fooImage").empty();
 		$("#hotImage").empty();
 		count ++;
