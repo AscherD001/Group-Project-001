@@ -14,6 +14,7 @@ var events = [];
 var eventsArr = [];
 var places = [];
 var placesArr = [];
+var display = [];
 var state = 0;
 var newMap = {
 	center: {lat: 35.2271, lng: -80.8431},
@@ -260,6 +261,8 @@ function citySearch() {
 	$("#hotImage").empty();
 	$("#entImage").empty();
 	$("#fooImage").empty();
+	$(".foodBlurb").remove();
+	$(".weatherBlurb").remove();
 	state = 4;
 	clearMarkers(eventsArr);
 	clearMarkers(placesArr);
@@ -322,7 +325,7 @@ function eventSearch(lat, lng) {
     	// page_number: 1 
     }; 
     EVDB.API.call("/events/search", oArgs, function(data) { 
-    	console.log(data);
+    	// console.log(data);
     	var event = data.events.event;
   		for(var i = 0; i < event.length; i++) {
 			var place = event[i];
@@ -468,12 +471,24 @@ function zomatoCityRestaurants(entityId,entityType) {
         entity_type: entityType,
     }, function(data) {
         // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
-
+        // console.log(data);
          for(var i = 0; i < data.best_rated_restaurant.length; i++) {
         	// console.log(data.nearby_restaurants[i].restaurant.name);
 			var place = data.best_rated_restaurant[i].restaurant;
 			food.push(place);
 		}
+		//append to the blub the top cuisines in a scripted string statement. 
+
+		var topCuisines = data.top_cuisines
+			topCuisines[topCuisines.length - 1] = 'and ' + topCuisines[topCuisines.length - 1]
+		
+			// console.log(topCuisines);
+			for (var j = 0; j < topCuisines.length; j++) { 
+				topCuisines[j] = " " + topCuisines[j];
+			}
+		var cuisinesList = topCuisines.toString()
+			// console.log(cuisinesList)
+		$("#cityblurb").parent(".wrapper").append($("<div class='foodBlurb'><h4>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></h4>")); 	
     });
 };
 
@@ -499,7 +514,9 @@ function zomatoCityRestaurants(entityId,entityType) {
         var low = data['trip']['temp_low']['avg']['F'];
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
-        console.log(data);
+        
+        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><h4>For the month of your trip, the average low in " + cityState[0] + " is typically " + low + " &#8457" + "&#59; the average high is typically " + high + " &#8457, with a " + chance + "% chance of precipitation." 
+        	+ "</div></h4>" ))
         // $('#imageOne').append()
         // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
         // $('#imageOne').append("<h3>Average low "+low+" F°</h3>")
