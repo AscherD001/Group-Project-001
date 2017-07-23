@@ -488,7 +488,7 @@ function zomatoCityRestaurants(entityId,entityType) {
 			}
 		var cuisinesList = topCuisines.toString()
 			// console.log(cuisinesList)
-		$("#cityblurb").parent(".wrapper").append($("<div class='foodBlurb'><h4>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></h4>")); 	
+		$("#cityblurb").parent(".wrapper").append($("<div class='foodBlurb'><p>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></p>")); 	
     });
 };
 
@@ -515,8 +515,8 @@ function zomatoCityRestaurants(entityId,entityType) {
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
         
-        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><h4>For the month of your trip, the average low in " + cityState[0] + " is typically " + low + " &#8457" + "&#59; the average high is typically " + high + " &#8457, with a " + chance + "% chance of precipitation." 
-        	+ "</div></h4>" ))
+        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p>For the month of your trip, the average low in " + cityState[0] + " is typically " + low + " &#8457" + "&#59; the average high is typically " + high + " &#8457, with a " + chance + "% chance of precipitation." 
+        	+ "</div></p>" ))
         // $('#imageOne').append()
         // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
         // $('#imageOne').append("<h3>Average low "+low+" F°</h3>")
