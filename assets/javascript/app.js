@@ -118,10 +118,13 @@ function addEventMarkers() {
 		if (events[count].description === null) { 
 			events[count].description = "see link for more details"
 		}
+ 		//reformat event time
+		var eventDate = moment(events[count].start_time).format('LLLL');
+
 		$("#entImage").append($('<div class="w3-card subInfocardRight" data-index="' 
 			+ count + '"><div class="row header"><div class="wrapper">' 
 			+ '<p>' + events[count].title + '</p>'
-			+ '<p>' + events[count].start_time + '<p>' 
+			+ '<p>' + eventDate + '<p>' 
 			+ '<p>' + events[count].venue_name + '<p>'
 			+ '<p class="description">' + events[count].description + '<p>' 
 			+ '<p>' + events[count].venue_address + ", " + events[count].postal_code + '<p>'
