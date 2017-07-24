@@ -79,7 +79,7 @@ function addPlaceMarkers() {
 		});
 		placesArr.push(marker);
 		if(places[count]) {
-			var content = '<img class="iconImg" src="' + places[count].icon + '">' +  places[count].name + "<br>" + 'Rating: ' + places[count].rating + "<br>" + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
+			var content = '<img class="iconImg" src="' + places[count].icon + '">' + "&nbsp;&nbsp;" + places[count].name + "<br>" + 'Rating: ' + places[count].rating  + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
 			// + places[count].types;
 			windowInfoCreate(marker, location, content);
 		}
@@ -92,8 +92,8 @@ function addPlaceMarkers() {
 		//var newDiv = 
 		$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
 			+ count + '"><div class="row header"><div class="wrapper">' 
-			+ '<p>' + '<img src="' + places[count].icon + '">'
-			+ places[count].name + '</p>' 
+			+ '<p>' + '<img class="placesDispImg" src="' + places[count].icon + '">'
+			+ "&nbsp;" + places[count].name + '</p>' 
 			+ '<p> Rating: ' + places[count].rating + '<p>'
 			+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
 		//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
@@ -513,7 +513,7 @@ function zomatoCityRestaurants(entityId,entityType) {
 			}
 		var cuisinesList = topCuisines.toString()
 			// console.log(cuisinesList)
-		$("#cityblurb").parent(".wrapper").append($("<div class='foodBlurb'><p>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></p>")); 	
+		$(".blurb").append($("<div class='foodBlurb'><p>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></p>")); 	
     });
 };
 
@@ -539,8 +539,9 @@ function zomatoCityRestaurants(entityId,entityType) {
         var low = data['trip']['temp_low']['avg']['F'];
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
-        
-        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p>For the month of your trip, the average low in " + cityState[0] + " is typically " + low + " &#8457" + "&#59; the average high is typically " + high + " &#8457, with a " + chance + "% chance of precipitation." 
+        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+		var d = new Date();
+        $(".blurb").append($("<div class='weatherBlurb'><p>For the month of" + monthNames[d.getMonth()] + ", the average low in " + cityState[0] + " is typically " + low + " &#8457" + " and the average high is " + high + " &#8457. There's a " + chance + "% probability of precipitation this month." 
         	+ "</div></p>" ))
         // $('#imageOne').append()
         // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")

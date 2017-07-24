@@ -188,6 +188,8 @@ margin-bottom: 10px;
 }
 #cityimage {
   width: 100%;
+  /*i'm sure you'll want to display something here, but without it, users don't scroll to see the map*/
+  display:none;
 }
 
 /*CODE PEN SEARCH*/
@@ -307,6 +309,13 @@ input[type="submit"]:hover {
   margin-left: 40px;
   float: left;
 }
+.iconImg {
+  max-height: 15px;
+}
+
+.placesDispImg { 
+  max-height: 30px;
+ }
 
 @media screen and (max-width: 767px) {
   html, body {
@@ -344,7 +353,8 @@ input[type="submit"]:hover {
   }
   #main {
     margin-top: 25px;
-    height: 900px;
+    /*height: 900px;*/
+    /*don't set a height and you won't get the glitch after a user resizes the page, scrolls down, and returns to full screen*/
     overflow: auto;
     overflow-x: hidden;
   }
@@ -354,11 +364,6 @@ input[type="submit"]:hover {
   }
   .rightColumn {
     height: 900px;
-    overflow: auto;
-  }
-
-  .description {
-    /*some descriptions are long; can we change the css to allow users to scroll?*/
     overflow: auto;
   }
 }
