@@ -56,7 +56,8 @@ function addPlaceMarkers() {
 		});
 		placesArr.push(marker);
 		if(places[count]) {
-			var content = places[count].name + "<br>" + count + "<br>" + "<br>" + places[count].vicinity + "<br>" + places[count].types;
+			var content = '<img class="iconImg" src="' + places[count].icon + '">' +  places[count].name + "<br>" + 'Rating: ' + places[count].rating + "<br>" + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
+			// + places[count].types;
 			windowInfoCreate(marker, location, content);
 		}
 		if(count == max) {
@@ -68,8 +69,8 @@ function addPlaceMarkers() {
 		//var newDiv = 
 		$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
 			+ count + '"><div class="row header"><div class="wrapper">' 
-			+ '<img src="' + places[count].icon + '">'
-			+ '<p>' + places[count].name + '</p>' 
+			+ '<p>' + '<img src="' + places[count].icon + '">'
+			+ places[count].name + '</p>' 
 			+ '<p> Rating: ' + places[count].rating + '<p>'
 			+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
 		//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
@@ -109,7 +110,8 @@ function addEventMarkers() {
 		eventsArr.push(marker);
 		if(events[count]) {
 			// console.log(markers[count]);
-			var content = events[count].title; // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
+			var content = events[count].title + "<br>" + moment(events[count].start_time).format('LLLL') + "<br>" + events[count].venue_name + "<br>" + events[count].venue_address + ", " + events[count].postal_code + "<br>" + '<a href="'+events[count].url+'" target="_blank">More Info</a>';
+			 // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
 			windowInfoCreate(marker, latLng, content);
 		}
 		if(count == max) {
@@ -170,7 +172,7 @@ function addFoodMarkers() {
 		foodArr.push(marker);
 		if(food[count]) {
 			// console.log(markers[count]);
-			var content = food[count].name; // + "<br>" + food[count].vicinity + "<br>" + food[count].types;
+			var content = food[count].name + "<br>" + food[count].location.address + "<br>" + "<a href='"+food[count].menu_url+"' target='_blank'>Menu</a>";
 			windowInfoCreate(marker, latLng, content);
 		}
 		if(count == max) {
@@ -182,7 +184,7 @@ function addFoodMarkers() {
 			+ '<p>'+food[count].name +'</p>'
 			+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
 			+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
-			+ '<p> Location: ' + food[count].location.address + '</p></div></div>');
+			+ '<p> Location: ' + food[count].location.address + '</p></div></div></div>')
 		$("#hotImage").empty();
 		$("#entImage").empty();
 		count ++;
@@ -592,7 +594,7 @@ function w3_close() {
 }
 // updates the real time clock to within 1/10 of a second
 function realTime() {
-  	$(".clock").html(moment().format("HH:mm:ss"));
+  	$(".clock").html(moment().format("hh:mm A"));
 }
 // Old Code That May Be Useful
 
