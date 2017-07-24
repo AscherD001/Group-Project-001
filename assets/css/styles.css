@@ -27,6 +27,11 @@ li {
   padding-top: 5px;
   padding-right: 5px;
 }
+#autocomplete1 {
+      width: 600px;
+    padding: 5px;
+    text-align: center;
+}
 .header > .wrapperR > p {
   font-size: 15px;
   font-weight: bold;
@@ -36,7 +41,7 @@ li {
   margin-left: 20%;
   margin-right:20%;
   margin-top: 100px;
-  background-color: rgba(255,255,255,0.24);
+/*  background-color: rgba(255,255,255,0.24);*/
   /*  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);*/
 }
 .NBbutton {

@@ -31,7 +31,7 @@
     <button class="w3-button w3-medium pull-right" id="hamburger" onclick="w3_open()">&#9776;</button>
   </div>
   <div id="landingpage">
-    <div class="w3-card" id="displaydiv">
+    <div id="displaydiv">
       <img src="assets/images/suitcasebear.png" height="110px" width="135px" id="homelogo"></img>
       <h1 id="question">Where would you like to go?</h1>
       <br>
@@ -48,23 +48,23 @@
     <div class="leftColumn col-sm-6">
       <div class="w3-card" id="infocarddiv">
         <div class="row header">
-        <div class="city row header">City Info</div>
-          <!-- <div class="topText col-sm-5" id="weather">Weather</div> -->
-          <!-- <div class="col-sm-6" id="time">Current Time</div> -->
+          <div class="topText col-sm-5" id="weather">Weather</div>
+          <div class="col-sm-6" id="time">Current Time</div>
         </div>
         <div class="wrapper container">
           <div id="weather row">
             <div id="image" class="col-xs-12">
               <img class='weatherImg' src="">
               <h2 class='temp'></h2>
-              <div class='clock'></div>
+              <div class='clock'></div></img>
             </div>
             <span id="currenttime"></span>
           </div>
         </div>
-        <div class="wrapper">
-          <img id="cityimage" height="200px" width="300px"></img>
-        </div>
+        <div class="city row header">City Info</div>
+          <div class="wrapper">
+            <img id="cityimage" height="200px" width="300px"></img>
+            </div>
             <div class="row">
               <div class="wrapper">
                 <p id="cityblurb"></p>
@@ -82,29 +82,28 @@
         
         <div class="rightColumn col-sm-6">
           <div class="sideBtn w3-card infocardRight" id="hotelBtn">
-            <div class="row header" id="hotels">Hotels
-              <div class="wrapper">
-                <p id="hotImage">Hotel images are appended here</p>
-              </div>
+            <div class="row header" id="hotels">Hotels</div>
+            <div class="wrapper">
+              <div id="hotImage">Hotel images are appended here</div>
             </div>
           </div>
+        
 
           <!--     NEW CARD -->
           <div class="sideBtn w3-card infocardRight" id="foodBtn">
-            <div class="row header">Food
-              <div class="wrapper">
-              <p id="fooImage">Food images are appended here</p>
-              </div>
+            <div class="row header">Food</div>
+            <div class="wrapper">
+              <div id="fooImage">Food images are appended here</div>
             </div>
-          </div> 
+          </div>
           <!--     NEW CARD -->
           <div class="sideBtn w3-card infocardRight" id="entBtn">
-            <div class="row header">Entertainment
-              <div class="wrapper">
-              <p id="entImage">Entertainment images are appended here</p>
-              </div>
+            <div class="row header">Entertainment</div>
+            <div class="wrapper">
+              <div id="entImage">Entertainment images are appended here</div>
             </div>
-          </div> 
+          </div>
+
           <div class="container" id="rightCol">
           </div>
         </div> <!-- END OF COLUMN /DIV -->
