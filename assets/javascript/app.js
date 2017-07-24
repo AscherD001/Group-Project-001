@@ -52,7 +52,8 @@ ref.on("value", function(snapshot) {
 function windowInfoCreate(marker, location, content) {
 	var info = {
 		content: content,
-		position: location
+		position: location,
+		pixelOffset: new google.maps.Size(0,-20)
 	};
 	var infoWindow = new google.maps.InfoWindow(info);
 	google.maps.event.addListener(marker, "click", function() {
@@ -85,7 +86,7 @@ function addPlaceMarkers() {
 				});
 				placesArr.push(marker);
 				if(places[count]) {
-					var content = '<img class="iconImg" src="' + places[count].icon + '">' +  places[count].name + "<br>" + 'Rating: ' + places[count].rating + "<br>" + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
+					var content = '<img class="iconImg" src="' + places[count].icon + '">' + "&nbsp;&nbsp;" +  places[count].name + "<br>" + 'Rating: ' + places[count].rating + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
 					// + places[count].types;
 					windowInfoCreate(marker, location, content);
 				}
@@ -98,8 +99,8 @@ function addPlaceMarkers() {
 				//var newDiv = 
 				$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
 					+ count + '"><div class="row header"><div class="wrapperR">' 
-					+ '<p>' + '<img src="' + places[count].icon + '">'
-					+ places[count].name + '</p>' 
+					+ '<p>' + '<img class="placesDispImg" src="' + places[count].icon + '">'
+					+ "&nbsp;" + places[count].name + '</p>' 
 					+ '<p> Rating: ' + places[count].rating + '<p>'
 					+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
 				//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
@@ -451,7 +452,7 @@ function cycleImg(index) {
 		current = 0;
 	}
 	cycleImage = setInterval(function() {
-			$("#cityimage").attr("src", cityImages[current]);
+			$("#cityimage").attr("src", cityImages[current]).addClass("img-responsive");
 			current ++;
 			if(current >= 10) {
 				current = 0;
@@ -563,7 +564,7 @@ function zomatoCityRestaurants(entityId,entityType) {
 };
 
 
-  function monthlyWeather() {
+  function monthlyURLWeather() {
   	var d = new Date();
     var n = d.getMonth()
     var month = n + 1;
@@ -584,8 +585,9 @@ function zomatoCityRestaurants(entityId,entityType) {
         var low = data['trip']['temp_low']['avg']['F'];
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
-        
-        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p class='blurb'>" + cityState[0] + ", this month:<br> The low average is typically " + low + "&#8457" + ", High average is typically " + high + "&#8457, with a " + chance + "% chance of precipitation." 
+        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+		var d = new Date();
+        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p class='blurb'>For the month of " + monthNames[d.getMonth()] + ", the average low in " + cityState[0] + " is typically " + low + " &#8457" + " and the average high is " + high + " &#8457. There's a " + chance + "% probability of precipitation this month." 
         	+ "</div></p>" ))
         // $('#imageOne').append()
         // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
@@ -626,7 +628,7 @@ function weatherCall(lat,lon) {
       //add to divs
       // $("#imageOne").before("<div id='image'>")
       // $('#image').append("<h2>"+ city + "," + stAbbr +"</h2>")
-      monthlyWeather();
+      monthlyURLWeather();
       currentWeather();
     }
   });
