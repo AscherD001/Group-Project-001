@@ -21,6 +21,29 @@ var newMap = {
 	zoom: 8,
 	scrollwheel:  false
 };
+var config = {
+    apiKey: "AIzaSyBZZd60-n-gjQ-ZYyFhOZFU9z7jbjf8WNY",
+    authDomain: "group-project001.firebaseapp.com",
+    databaseURL: "https://group-project001.firebaseio.com",
+    projectId: "group-project001",
+    storageBucket: "group-project001.appspot.com",
+    messagingSenderId: "102682495195"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
+var ref = database.ref("/connections");
+var connections = database.ref(".info/connected");
+connections.on("value", function(snapshot) {
+    if (snapshot.val()) {
+        var con = ref.push(true);
+        con.onDisconnect().remove();
+    }
+});
+
+ref.on("value", function(snapshot) {
+    $("#viewCount").html("Currently Viewing: " + snapshot.numChildren());
+});
+
 $("#cityimage").attr("src", "assets/images/placeholderCity.jpg");
 function windowInfoCreate(marker, location, content) {
 	var info = {
@@ -639,3 +662,32 @@ function realTime() {
 // 	});
 // 	markers.push(marker);
 // }
+
+$(document).ready(function(){
+	resizeDiv();
+});
+
+window.onresize = function(event) {
+	resizeDiv();
+}
+
+function resizeDiv() {
+	vpw = $(window).width();
+	vph = $(window).height();
+	if(vph > 699) {
+		$(".rightColumn").css({"height": (vph * 0.875) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.875) + "px"});
+	} else if(vph > 499) {
+		$(".rightColumn").css({"height": (vph * 0.825) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.825) + "px"});
+	} else if(vph > 399) {
+		$(".rightColumn").css({"height": (vph * 0.75) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.75) + "px"});
+	} else if(vph > 299) {
+		$(".rightColumn").css({"height": (vph * 0.7) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.7) + "px"});
+	} else if(vph > 199) {
+		$(".rightColumn").css({"height": (vph * 0.65) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.65) + "px"});
+	}
+}
