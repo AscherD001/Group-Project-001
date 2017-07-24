@@ -1,6 +1,6 @@
 // API key
 var mapsKey = "AIzaSyCdasgXLKtxe1vhh8nU7KP3tgCYB8o2yZg";
-var map, icon, fullName, loc, cseData;
+var map, icon, fullName, loc, cseData, cycleImage, customLoc, readyUp;
 var cityState = [];
 //zomato
 var lat,lon,entityId,entityType;
@@ -15,6 +15,11 @@ var eventsArr = [];
 var places = [];
 var placesArr = [];
 var display = [];
+var cityImages = [];
+var customHotelLoc = [];
+var customFoodLoc = [];
+var customEntLoc = [];
+var ready = [];
 var state = 0;
 var newMap = {
 	center: {lat: 35.2271, lng: -80.8431},
@@ -44,7 +49,6 @@ ref.on("value", function(snapshot) {
     $("#viewCount").html("Currently Viewing: " + snapshot.numChildren());
 });
 
-$("#cityimage").attr("src", "assets/images/placeholderCity.jpg");
 function windowInfoCreate(marker, location, content) {
 	var info = {
 		content: content,
@@ -56,162 +60,176 @@ function windowInfoCreate(marker, location, content) {
 	});
 }
 function addPlaceMarkers() {
-	icon = {
-	    url: "assets/images/markBear.png",
-	    scaledSize: new google.maps.Size(50, 50),
-	    origin: new google.maps.Point(0, 0),
-	    anchor: new google.maps.Point(25, 50)
-	}
-	var count = 0;
-	var max = 9;
-	// console.log(places);
-	if(places.length < 10) {
-		max = places.length - 1;
-	}
-	var displayPlaces = setInterval(function() {
-		var location = places[count].geometry.location;
-		var marker = new google.maps.Marker({
-		    position: location,
-		    map: map,
-		    icon: icon,
-		    animation: google.maps.Animation.DROP,
-		    clickable: true
-		});
-		placesArr.push(marker);
-		if(places[count]) {
-			var content = '<img class="iconImg" src="' + places[count].icon + '">' + "&nbsp;&nbsp;" + places[count].name + "<br>" + 'Rating: ' + places[count].rating  + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
-			// + places[count].types;
-			windowInfoCreate(marker, location, content);
+	readyUp = setInterval(function() {
+		if(ready[0]) {
+			icon = {
+			    url: "assets/images/markBear1.png",
+			    scaledSize: new google.maps.Size(50, 50),
+			    origin: new google.maps.Point(0, 0),
+			    anchor: new google.maps.Point(25, 50)
+			}
+			var count = 0;
+			var max = 9;
+			// console.log(places);
+			if(places.length < 10) {
+				max = places.length - 1;
+			}
+			var displayPlaces = setInterval(function() {
+				var location = places[count].geometry.location;
+				var marker = new google.maps.Marker({
+				    position: location,
+				    map: map,
+				    icon: icon,
+				    animation: google.maps.Animation.DROP,
+				    clickable: true
+				});
+				placesArr.push(marker);
+				if(places[count]) {
+					var content = '<img class="iconImg" src="' + places[count].icon + '">' +  places[count].name + "<br>" + 'Rating: ' + places[count].rating + "<br>" + "<br>" + 'Address: ' + places[count].vicinity + "<br>"; 
+					// + places[count].types;
+					windowInfoCreate(marker, location, content);
+				}
+				if(count == max) {
+					clearInterval(displayPlaces);
+				}
+				// console.log(places[count].name);
+				// $("#hotImage").append(newItem);
+				// var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
+				//var newDiv = 
+				$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
+					+ count + '"><div class="row header"><div class="wrapperR">' 
+					+ '<p>' + '<img src="' + places[count].icon + '">'
+					+ places[count].name + '</p>' 
+					+ '<p> Rating: ' + places[count].rating + '<p>'
+					+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
+				//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
+				//				+ places[count].name + '</p>'
+				//				+ '<img src="' + places[count].icon + '>'  
+				//				+ '<p>' + places[count].name + '</p>' 
+				//				+ '<p>' + places[count].rating + '</p>'  
+				//				+ '<p>' + places[count].vicinity + '</p></div></div></div>');
+				$("#fooImage").empty();
+				$("#entImage").empty();
+				count ++;
+			}, 125);
+			clearInterval(readyUp);
 		}
-		if(count == max) {
-			clearInterval(displayPlaces);
-		}
-		// console.log(places[count].name);
-		// $("#hotImage").append(newItem);
-		// var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
-		//var newDiv = 
-		$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
-			+ count + '"><div class="row header"><div class="wrapper">' 
-			+ '<p>' + '<img class="placesDispImg" src="' + places[count].icon + '">'
-			+ "&nbsp;" + places[count].name + '</p>' 
-			+ '<p> Rating: ' + places[count].rating + '<p>'
-			+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
-		//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
-		//				+ places[count].name + '</p>'
-		//				+ '<img src="' + places[count].icon + '>'  
-		//				+ '<p>' + places[count].name + '</p>' 
-		//				+ '<p>' + places[count].rating + '</p>'  
-		//				+ '<p>' + places[count].vicinity + '</p></div></div></div>');
-		$("#fooImage").empty();
-		$("#entImage").empty();
-		count ++;
-	}, 125);
+	});
 }
 function addEventMarkers() {
-	icon = {
-	    url: "assets/images/markBear.png",
-	    scaledSize: new google.maps.Size(50, 50),
-	    origin: new google.maps.Point(0, 0),
-	    anchor: new google.maps.Point(25, 50)
-	}
-	var count = 0;
-	var max = 9;
-	if(events.length < 10) {
-		max = events.length - 1;
-	}
-	var displayMarkers = setInterval(function() {
-		var lat = events[count].latitude;
-		var lng = events[count].longitude;
-		var latLng = new google.maps.LatLng(lat, lng);
-		var marker = new google.maps.Marker({
-		    position: latLng,
-		    map: map,
-		    icon: icon,
-		    animation: google.maps.Animation.DROP,
-		    clickable: true
-		});
-		eventsArr.push(marker);
-		if(events[count]) {
-			// console.log(markers[count]);
-			var content = events[count].title + "<br>" + moment(events[count].start_time).format('LLLL') + "<br>" + events[count].venue_name + "<br>" + events[count].venue_address + ", " + events[count].postal_code + "<br>" + '<a href="'+events[count].url+'" target="_blank">More Info</a>';
-			 // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
-			windowInfoCreate(marker, latLng, content);
-		}
-		if(count == max) {
-			clearInterval(displayMarkers);
-		}
+	readyUp = setInterval(function() {
+		if(ready[2]) {
+			icon = {
+			    url: "assets/images/markBear1.png",
+			    scaledSize: new google.maps.Size(50, 50),
+			    origin: new google.maps.Point(0, 0),
+			    anchor: new google.maps.Point(25, 50)
+			}
+			var count = 0;
+			var max = 9;
+			if(events.length < 10) {
+				max = events.length - 1;
+			}
+			var displayMarkers = setInterval(function() {
+				var lat = events[count].latitude;
+				var lng = events[count].longitude;
+				var latLng = new google.maps.LatLng(lat, lng);
+				var marker = new google.maps.Marker({
+				    position: latLng,
+				    map: map,
+				    icon: icon,
+				    animation: google.maps.Animation.DROP,
+				    clickable: true
+				});
+				eventsArr.push(marker);
+				if(events[count]) {
+					// console.log(markers[count]);
+					var content = events[count].title + "<br>" + moment(events[count].start_time).format('LLLL') + "<br>" + events[count].venue_name + "<br>" + events[count].venue_address + ", " + events[count].postal_code + "<br>" + '<a href="'+events[count].url+'" target="_blank">More Info</a>';
+					 // + "<br>" + events[count].vicinity + "<br>" + events[count].types;
+					windowInfoCreate(marker, latLng, content);
+				}
+				if(count == max) {
+					clearInterval(displayMarkers);
+				}
 
-		if (events[count].description === null) { 
-			events[count].description = "see link for more details"
+				if (events[count].description === null) { 
+					events[count].description = "see link for more details"
+				}
+		 		//reformat event time
+				var eventDate = moment(events[count].start_time).format('LLLL');
+
+				$("#entImage").append($('<div class="w3-card subInfocardRight" data-index="' 
+					+ count + '"><div class="row header"><div class="wrapperR">' 
+					+ '<p>' + events[count].title + '</p>'
+					+ '<p>' + eventDate + '<p>' 
+					+ '<p>' + events[count].venue_name + '<p>'
+					+ '<p class="description">' + events[count].description + '<p>' 
+					+ '<p>' + events[count].venue_address + ", " + events[count].postal_code + '<p>'
+					+ '<p><a href="'+events[count].url+'" target="_blank">More Info</a></p></div></div></div>'));
+
+				$("#fooImage").empty();
+				$("#hotImage").empty();
+				count ++;
+			}, 125);
+			clearInterval(readyUp);
 		}
- 		//reformat event time
-		var eventDate = moment(events[count].start_time).format('LLLL');
-
-		$("#entImage").append($('<div class="w3-card subInfocardRight" data-index="' 
-			+ count + '"><div class="row header"><div class="wrapper">' 
-			+ '<p>' + events[count].title + '</p>'
-			+ '<p>' + eventDate + '<p>' 
-			+ '<p>' + events[count].venue_name + '<p>'
-			+ '<p class="description">' + events[count].description + '<p>' 
-			+ '<p>' + events[count].venue_address + ", " + events[count].postal_code + '<p>'
-			+ '<p><a href="'+events[count].url+'" target="_blank">More Info</a></p></div></div></div>'));
-
-		$("#fooImage").empty();
-		$("#hotImage").empty();
-		count ++;
-	}, 125);
+	});
 }
 function addFoodMarkers() {
-	icon = {
-	    url: "assets/images/markBear.png",
-	    scaledSize: new google.maps.Size(50, 50),
-	    origin: new google.maps.Point(0, 0),
-	    anchor: new google.maps.Point(25, 50)
-	}
-	// console.log(food[0]);
-	var count = 0;
-	var max = 9;
-	if(food.length < 10) {
-		max = food.length - 1;
-	}
-	var displayMarkers = setInterval(function() {	
-		var lat = food[count].location.latitude;
-		var lng = food[count].location.longitude;
-		if(parseInt(lat) == 0 || parseInt(lng) == 0 ) {
-
-			console.log("My lat and lng are 0.00000000! food[" + count + "]");
-			// setting their markers to charlotte center
-			lat = loc.lat;
-			lng = loc.lng;
+	readyUp = setInterval(function() {
+		if(ready[1]) {
+			icon = {
+			    url: "assets/images/markBear1.png",
+			    scaledSize: new google.maps.Size(50, 50),
+			    origin: new google.maps.Point(0, 0),
+			    anchor: new google.maps.Point(25, 50)
+			}
+			// console.log(food[0]);
+			var count = 0;
+			var max = 9;
+			if(food.length < 10) {
+				max = food.length - 1;
+			}
+			var displayMarkers = setInterval(function() {
+				var lat = food[count].location.latitude;
+				var lng = food[count].location.longitude;
+				if(parseInt(lat) == 0 || parseInt(lng) == 0 ) {
+					console.log("My lat and lng are 0.00000000! food[" + count + "]");
+					// setting their markers to charlotte center
+					lat = loc.lat;
+					lng = loc.lng;
+				}
+				var latLng = new google.maps.LatLng(lat, lng);
+				var marker = new google.maps.Marker({
+				    position: latLng,
+				    map: map,
+				    icon: icon,
+				    animation: google.maps.Animation.DROP,
+				    clickable: true
+				});
+				foodArr.push(marker);
+				if(food[count]) {
+					// console.log(markers[count]);
+					var content = food[count].name + "<br>" + food[count].location.address + "<br>" + "<a href='"+food[count].menu_url+"' target='_blank'>Menu</a>";
+					windowInfoCreate(marker, latLng, content);
+				}
+				if(count == max) {
+					clearInterval(displayMarkers);
+				}
+				$("#fooImage").append('<div class="w3-card subInfocardRight" data-index="' 
+					+ count + '"><div class="row header"><div class="wrapperR">' 
+					+ "<img class='img-responsive' src='" + food[count].featured_image + "'>"
+					+ '<p>'+food[count].name +'</p>'
+					+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
+					+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
+					+ '<p> Location: ' + food[count].location.address + '</p></div></div></div>')
+				$("#hotImage").empty();
+				$("#entImage").empty();
+				count ++;
+			}, 125);
+			clearInterval(readyUp);
 		}
-		var latLng = new google.maps.LatLng(lat, lng);
-		var marker = new google.maps.Marker({
-		    position: latLng,
-		    map: map,
-		    icon: icon,
-		    animation: google.maps.Animation.DROP,
-		    clickable: true
-		});
-		foodArr.push(marker);
-		if(food[count]) {
-			// console.log(markers[count]);
-			var content = food[count].name + "<br>" + food[count].location.address + "<br>" + "<a href='"+food[count].menu_url+"' target='_blank'>Menu</a>";
-			windowInfoCreate(marker, latLng, content);
-		}
-		if(count == max) {
-			clearInterval(displayMarkers);
-		}
-		$("#fooImage").append('<div class="w3-card subInfocardRight" data-index="' 
-			+ count + '"><div class="row header"><div class="wrapper">' 
-			+ "<img class='img-responsive' src='" + food[count].featured_image + "'>"
-			+ '<p>'+food[count].name +'</p>'
-			+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
-			+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
-			+ '<p> Location: ' + food[count].location.address + '</p></div></div></div>')
-		$("#hotImage").empty();
-		$("#entImage").empty();
-		count ++;
-	}, 125);
+	});
 }
 function zoomMarker(markers, index) {
 	map.panTo(markers[index].getPosition());
@@ -223,6 +241,7 @@ function searchPlaces(results, status) {
 			var place = results[i];
 			places.push(place);
 		}
+		ready[0] = true;
 		// var test = markers[0].photos[0].getUrl();
 	}
 }
@@ -288,6 +307,7 @@ function citySearch() {
 	$("#fooImage").empty();
 	$(".foodBlurb").remove();
 	$(".weatherBlurb").remove();
+	ready = [false, false, false];
 	state = 4;
 	clearMarkers(eventsArr);
 	clearMarkers(placesArr);
@@ -298,6 +318,8 @@ function citySearch() {
 	eventsArr = [];
 	places = [];
 	placesArr = [];
+	clearInterval(cycleImage);
+	cityImages = [];
 	var query = fullName;
 	var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&sensor=false";
 	$.get(queryURL, function(data) {
@@ -321,7 +343,7 @@ function citySearch() {
 		eventSearch(loc.lat, loc.lng);
 		zomatoCitySearch(loc.lat,loc.lng);
 		weatherCall(loc.lat,loc.lng);
-		cseSearch(cityState[0] + " " + cityState[1]);
+		cseSearch(cityState[0] + cityState[1] + "+city");
 		// enables CSE search off for testing
 		// cseSearch(query);
 		// capatilizes the first letter and updates headline html
@@ -331,7 +353,6 @@ function citySearch() {
 		var realClock = setInterval(realTime, 100);
 	});
 }
-
 function eventSearch(lat, lng) {
 	var oArgs = { 
     	app_key: "2pRpwC3ck9hKHFqh", 
@@ -356,6 +377,7 @@ function eventSearch(lat, lng) {
 			var place = event[i];
 			events.push(place);
 		}
+		ready[2] = true;
     });
 }
 
@@ -373,8 +395,7 @@ function clearMarkers(arr) {
 // loads the map into html after the page has loaded
 $("body").append($('<script class="customMap" async defer src="https://maps.googleapis.com/maps/api/js?key=' + mapsKey + '&libraries=places&callback=initMap"></script>'));
 // geocode api request for lat lng of input field value
-$(".infocardRight").on("click", function() {
-
+$(".sideBtn").on("click", function() {
 	if($(this).attr("id") == "hotelBtn" && state != 1 && state != 0) {
 		state = 1;
 		$("#hotImage").empty();
@@ -407,8 +428,9 @@ $(".infocardRight").on("click", function() {
 		clearMarkers(foodArr);
 		updateMap(loc.lat, loc.lng, 13);
 		addFoodMarkers();
-	}		
+	}
 });
+
 $(document).on("click", ".subInfocardRight", function() {
 	if(state == 1) {
 		var index = $(this).attr("data-index");
@@ -423,15 +445,37 @@ $(document).on("click", ".subInfocardRight", function() {
 		zoomMarker(eventsArr, index);
 	}
 });
+function cycleImg(index) {
+	var current = index + 1;
+	if(current >= 10) {
+		current = 0;
+	}
+	cycleImage = setInterval(function() {
+			$("#cityimage").attr("src", cityImages[current]);
+			current ++;
+			if(current >= 10) {
+				current = 0;
+			}
+	}, 10000);
+}
 function cseSearch(query) {
-	//var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
-	// var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
-	 var cseKey = "AIzaSyD_SVLOZ-31PIlN_XCdKJAYXlw5yHFvcUw"
+	// var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
+	var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
+	// var cseKey = "AIzaSyD_SVLOZ-31PIlN_XCdKJAYXlw5yHFvcUw"
 	var SEid = "004303949972187002826:5vg83odxtam";
 	// var query = prompt("Enter a Search");
-	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
+	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&searchType=image&imgSize=large&cx=" + SEid + "&q=" + query + "&excludeTerms=hotel|food|entertainment|logo|brand|home|dreams|journalist|auto|car|map|selfie|default" + "&safe=high";
 	$.get(queryURL, function(data) {
-		cseData = data.items;
+		cseData = data;
+		// console.log(cseData);
+		var random = Math.floor(Math.random() * 10);
+		// console.log(cseData.items[0].link);
+		for(var i = 0; i < cseData.items.length; i ++) {
+			cityImages.push(cseData.items[i].link)
+		}
+		$("#cityimage").attr("src", cityImages[random]);
+
+		cycleImg(random);
 		// console.log(cseData);
 		// console.log(data.items[0].pagemap.cse_image[0].src);
 	});	
@@ -497,23 +541,24 @@ function zomatoCityRestaurants(entityId,entityType) {
     }, function(data) {
         // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
         // console.log(data);
-         for(var i = 0; i < data.best_rated_restaurant.length; i++) {
+        for(var i = 0; i < data.best_rated_restaurant.length; i++) {
         	// console.log(data.nearby_restaurants[i].restaurant.name);
 			var place = data.best_rated_restaurant[i].restaurant;
 			food.push(place);
 		}
+		ready[1] = true;
 		//append to the blub the top cuisines in a scripted string statement. 
 
-		var topCuisines = data.top_cuisines
-			topCuisines[topCuisines.length - 1] = 'and ' + topCuisines[topCuisines.length - 1]
+		var topCuisines = data.top_cuisines;
+			topCuisines[topCuisines.length - 1] = 'and ' + topCuisines[topCuisines.length - 1];
 		
 			// console.log(topCuisines);
 			for (var j = 0; j < topCuisines.length; j++) { 
 				topCuisines[j] = " " + topCuisines[j];
 			}
-		var cuisinesList = topCuisines.toString()
+		var cuisinesList = topCuisines.toString();
 			// console.log(cuisinesList)
-		$(".blurb").append($("<div class='foodBlurb'><p>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></p>")); 	
+		$("#cityblurb").parent(".wrapper").append($("<div class='foodBlurb'><p class='blurb'>" + cityState[0] + " is known for its " + cuisinesList + " cuisines." + "</div></p>")); 	
     });
 };
 
@@ -539,9 +584,8 @@ function zomatoCityRestaurants(entityId,entityType) {
         var low = data['trip']['temp_low']['avg']['F'];
         var high = data['trip']['temp_high']['avg']['F'];
         var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
-        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-		var d = new Date();
-        $(".blurb").append($("<div class='weatherBlurb'><p>For the month of" + monthNames[d.getMonth()] + ", the average low in " + cityState[0] + " is typically " + low + " &#8457" + " and the average high is " + high + " &#8457. There's a " + chance + "% probability of precipitation this month." 
+        
+        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p class='blurb'>" + cityState[0] + ", this month:<br> The low average is typically " + low + "&#8457" + ", High average is typically " + high + "&#8457, with a " + chance + "% chance of precipitation." 
         	+ "</div></p>" ))
         // $('#imageOne').append()
         // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
@@ -650,7 +694,7 @@ function realTime() {
 
 // function addMarker(lat, lng) {
 // 	icon = {
-// 	    url: "assets/images/markBear.png",
+// 	    url: "assets/images/markBear1.png",
 // 	    scaledSize: new google.maps.Size(50, 50),
 // 	    origin: new google.maps.Point(0, 0),
 // 	    anchor: new google.maps.Point(25, 50)

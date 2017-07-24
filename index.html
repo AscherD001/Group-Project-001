@@ -20,9 +20,9 @@
 
   <div class="w3-sidebar w3-bar-block w3-card-3 w3-animate-right" style="display:none" id="mySidebar">
     <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
-    <a href="#hotelBtn" class="page-scroll w3-bar-item w3-button">Hotels</a>
-    <a href="#foodBtn" class="page-scroll w3-bar-item w3-button">Food</a>
-    <a href="#entBtn" class="page-scroll w3-bar-item w3-button">Events</a>
+    <div id="hotelBtn" class="sideBtn page-scroll w3-bar-item w3-button">Hotels</div>
+    <div id="foodBtn" class="sideBtn page-scroll w3-bar-item w3-button">Food</div>
+    <div id="entBtn" class="sideBtn page-scroll w3-bar-item w3-button">Events</div>
   </div>
   <div class="w3-bar TBnavbar">
     <a href="#" class="w3-bar-item w3-button NBbutton" style="text-decoration: none" id="NBname"><img style="max-width:35px; margin-top: -7px;" src="assets/images/basichatbear.png"><strong>Travel</strong>Bear</a>
@@ -48,9 +48,8 @@
     <div class="leftColumn col-sm-6">
       <div class="w3-card" id="infocarddiv">
         <div class="row header">
-          <div class="city row header">City Info</div>
-          <!-- <div class="topText col-sm-5" id="weather"></div> --> <!--Weather-->
-      <!--     <div class="col-sm-6" id="time"></div> --><!--Current Time-->
+          <div class="topText col-sm-5" id="weather">Weather</div>
+          <div class="col-sm-6" id="time">Current Time</div>
         </div>
         <div class="wrapper container">
           <div id="weather row">
@@ -62,25 +61,27 @@
             <span id="currenttime"></span>
           </div>
         </div>
+        <div class="city row header">City Info</div>
           <div class="wrapper">
             <img id="cityimage" height="200px" width="300px"></img>
             </div>
             <div class="row">
-              <div class="wrapper blurb">
+              <div class="wrapper">
+                <p id="cityblurb"></p>
               </div>
             </div>
            
           <div class="row header"></div>
             <div class="wrapper">
               <div id="map"></div>
-              <div id="viewCount"></div>
+              <div><span id="viewCount"></span></div>
             </div>
           </div>  
         </div>
         
         
         <div class="rightColumn col-sm-6">
-          <div class="w3-card infocardRight" id="hotelBtn">
+          <div class="sideBtn w3-card infocardRight" id="hotelBtn">
             <div class="row header" id="hotels">Hotels
               <div class="wrapper">
                 <p id="hotImage">Hotel images are appended here</p>
@@ -89,7 +90,7 @@
           </div>
 
           <!--     NEW CARD -->
-          <div class="w3-card infocardRight" id="foodBtn">
+          <div class="sideBtn w3-card infocardRight" id="foodBtn">
             <div class="row header">Food
               <div class="wrapper">
               <p id="fooImage">Food images are appended here</p>
@@ -97,7 +98,7 @@
             </div>
           </div> 
           <!--     NEW CARD -->
-          <div class="w3-card infocardRight" id="entBtn">
+          <div class="sideBtn w3-card infocardRight" id="entBtn">
             <div class="row header">Entertainment
               <div class="wrapper">
               <p id="entImage">Entertainment images are appended here</p>

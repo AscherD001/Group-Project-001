@@ -25,6 +25,7 @@ li {
   font-size: 20px;
   padding-left: 30px;
   padding-top: 5px;
+  padding-right: 5px;
 }
 #displaydiv {
   text-align: center;
@@ -162,10 +163,22 @@ margin-bottom: 10px;
     max-height: 350px;
     overflow: auto;
 }*/
+/*.blurb {
+  margin: -15px 10px 25px 15px;
+}*/
+.foodBlurb {
+  margin: 0px 15px 0px 15px;
+}
+.weatherBlurb {
+  margin: 0px 15px 0px 15px;
+}
 ::-webkit-scrollbar {
     width: 12px;
 }
- 
+.subInfocardRight {
+  margin-right: 25px;
+  margin-top: 5px;
+}
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
     border-radius: 10px;
@@ -181,15 +194,16 @@ margin-bottom: 10px;
 .wrapper {
   padding-left: 30px;
   padding-right: 30px;
-
+}
+.wrapperR {
+  padding-right: 25px;
+  padding-top: 10px;
 }
 #cityfacts {
   padding-top: 8px;
 }
 #cityimage {
   width: 100%;
-  /*i'm sure you'll want to display something here, but without it, users don't scroll to see the map*/
-  display:none;
 }
 
 /*CODE PEN SEARCH*/
@@ -270,9 +284,9 @@ input[type="submit"]:hover {
   top: 0px;
   left: 0px;
 }
-#cityblurb {
+/*#cityblurb {
   padding: 3%;
-}
+}*/
 .city {
   margin-top: -5px;
   padding-bottom: 10px;
@@ -309,13 +323,9 @@ input[type="submit"]:hover {
   margin-left: 40px;
   float: left;
 }
-.iconImg {
-  max-height: 15px;
+#viewCount {
+  line-height: 30px;
 }
-
-.placesDispImg { 
-  max-height: 30px;
- }
 
 @media screen and (max-width: 767px) {
   html, body {
@@ -353,8 +363,7 @@ input[type="submit"]:hover {
   }
   #main {
     margin-top: 25px;
-    /*height: 900px;*/
-    /*don't set a height and you won't get the glitch after a user resizes the page, scrolls down, and returns to full screen*/
+    height: 900px;
     overflow: auto;
     overflow-x: hidden;
   }
@@ -364,6 +373,11 @@ input[type="submit"]:hover {
   }
   .rightColumn {
     height: 900px;
+    overflow: auto;
+  }
+
+  .description {
+    /*some descriptions are long; can we change the css to allow users to scroll?*/
     overflow: auto;
   }
 }
