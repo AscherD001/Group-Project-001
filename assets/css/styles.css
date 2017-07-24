@@ -342,8 +342,7 @@ input[type="submit"]:hover {
 .clock {
   font-size: 200%;
   margin-top: 5px;
-  margin-left: 40px;
-  float: left;
+  float: right;
 }
 #viewCount {
   line-height: 30px;
