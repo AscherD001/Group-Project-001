@@ -212,6 +212,9 @@ margin-bottom: 10px;
   padding-right: 25px;
   padding-top: 10px;
 }
+.leftColumn > #infocarddiv > .wrapper:nth-child(3) {
+  height:200px;
+}
 #cityfacts {
   padding-top: 8px;
 }
