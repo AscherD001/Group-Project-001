@@ -1,3 +1,5 @@
+//https://github.com/ameykshirsagar/zomato-js-sdk
+//a Zomato's jQuery SDK to connect with the Zomato's API.
 var zheader, version, url;
 var u = "https://developers.zomato.com/api/";
 var Zomato = {

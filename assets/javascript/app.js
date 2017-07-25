@@ -10,8 +10,10 @@ var foodArr = [];
 var stAbbr,city;
 var markers = [];
 var markerArr = [];
+//events
 var events = [];
 var eventsArr = [];
+//hotels
 var places = [];
 var placesArr = [];
 var display = [];
@@ -94,21 +96,13 @@ function addPlaceMarkers() {
 					clearInterval(displayPlaces);
 				}
 				// console.log(places[count].name);
-				// $("#hotImage").append(newItem);
-				// var newItem = $("<div class='w3-card itemDisplay'>" + places[count].name + "</div>");
-				//var newDiv = 
 				$("#hotImage").append($('<div class="w3-card subInfocardRight" data-index="' 
 					+ count + '"><div class="row header"><div class="wrapperR">' 
 					+ '<p>' + '<img class="placesDispImg" src="' + places[count].icon + '">'
 					+ "&nbsp;" + places[count].name + '</p>' 
 					+ '<p> Rating: ' + places[count].rating + '<p>'
 					+ '<p>Address: ' + places[count].vicinity + '<p></div></div></div>'));
-				//'<div class="w3-card subInfocardRight" data-index="' + count + '"><div class="row header"><div class="wrapper"><p>' 
-				//				+ places[count].name + '</p>'
-				//				+ '<img src="' + places[count].icon + '>'  
-				//				+ '<p>' + places[count].name + '</p>' 
-				//				+ '<p>' + places[count].rating + '</p>'  
-				//				+ '<p>' + places[count].vicinity + '</p></div></div></div>');
+
 				$("#fooImage").empty();
 				$("#entImage").empty();
 				count ++;
@@ -219,7 +213,7 @@ function addFoodMarkers() {
 				}
 				$("#fooImage").append('<div class="w3-card subInfocardRight" data-index="' 
 					+ count + '"><div class="row header"><div class="wrapperR">' 
-					+ "<img class='img-responsive' src='" + food[count].featured_image + "'>"
+					+ "<img class='img-responsive' src='" + food[count].featured_image + "'>" + "<br>"
 					+ '<p>'+food[count].name +'</p>'
 					+ '<p> Average cost for 2: $ ' + food[count].average_cost_for_two + '</p>'
 					+ "<p><a href='"+food[count].menu_url+"' target='_blank'>Menu</a></p>"
@@ -246,12 +240,7 @@ function searchPlaces(results, status) {
 		// var test = markers[0].photos[0].getUrl();
 	}
 }
-// function addEvents() {
-// 	for(var i = 0; i < events.length; i ++) {
-// 		var place = events[i];
-// 		eventMarkers.push(place);
-// 	}
-// }
+
 function addPlaces(latLng) {
 	var googlePlaces = new google.maps.places.PlacesService(map);
 	// 1609.34 is one mile in meters
@@ -358,17 +347,13 @@ function eventSearch(lat, lng) {
 	var oArgs = { 
     	app_key: "2pRpwC3ck9hKHFqh", 
     	q:"music",
-    	// "35.2270869"+"," + "-80.8431267", - charlotte
     	location: lat +"," + lng,
     	within: 10,
     	date: "This Week",
-    	// "All", "Future", "Past", "Today", "Last Week", "This Week", "Next week", and months by name
-    	// 'YYYYMMDD00-YYYYMMDD00', for example '2012042500-2012042700'; the last two digits of each date in this format are ignored. 
     	sort_order: "popularity",
     	sort_direction: "ascending",
     	image_sizes: "small",
     	page_size: 10
-    	//number of results per page
     	// page_number: 1 
     }; 
     EVDB.API.call("/events/search", oArgs, function(data) { 
@@ -460,8 +445,8 @@ function cycleImg(index) {
 	}, 10000);
 }
 function cseSearch(query) {
-	// var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
 	var cseKey = "AIzaSyBI_c00PTMT_3qV5IWFAf2dw-hShmxT9qU";
+	// var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
 	// var cseKey = "AIzaSyD_SVLOZ-31PIlN_XCdKJAYXlw5yHFvcUw"
 	var SEid = "004303949972187002826:5vg83odxtam";
 	// var query = prompt("Enter a Search");
@@ -481,33 +466,7 @@ function cseSearch(query) {
 		// console.log(data.items[0].pagemap.cse_image[0].src);
 	});	
 }
-// allows for Enter key to submit input field value
-// $("#autocomplete").keyup(function(event){
-//     if(event.keyCode == 13){
-//         $(".searchButton").click();
-//     }
-// });
-// CSE search for images temporarily disabled
-// function cseSearch(query) {
-// 	var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
-// 	// var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
-// 	var SEid = "004303949972187002826:5vg83odxtam";
-// 	// var query = prompt("Enter a Search");
-// 	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
-// 	$.get(queryURL, function(data) {
-// 		$(".display2").empty();
-// 		$("#banner").attr("background-image", "");
-// 		$("#banner").attr("style", "background-image: url('" + data.items[0].pagemap.cse_image[0].src + "')");
-// 		for(var i = 0; i < data.items.length; i ++) {
-// 			if(data.items[i].pagemap.cse_image) {
-// 				for(var j = 0; j < data.items[i].pagemap.cse_image.length; j ++) {
-// 					var temp = $("<div class='imgWrap col-xs-12'><img class='image col-xs-12' src='" + data.items[i].pagemap.cse_image[0].src + "'></div>");
-// 					$(".display2").append(temp);
-// 				}
-// 			}
-// 		}
-// 	});	
-// }
+
 
 function zomatoCitySearch(lat,lon) {
 
@@ -516,21 +475,15 @@ function zomatoCitySearch(lat,lon) {
     });
     
     Zomato.locations({
-        //replace query with the city name from google search
         query: "",
-        //replace with the lat/long variables
         lat: lat, 
         lon: lon,
-        //returns the first matching city
         count: 1
     }, function(data) {
-        // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
-       
-        //need these to run the locationsDetails function
+
         entityId = data.location_suggestions[0].entity_id;
         entityType = data.location_suggestions[0].entity_type;
         zomatoCityRestaurants(entityId,entityType);
-        // geocode();
     });
 };
 
@@ -540,19 +493,15 @@ function zomatoCityRestaurants(entityId,entityType) {
         entity_id: entityId,
         entity_type: entityType,
     }, function(data) {
-        // document.getElementById("locations_op").innerHTML = JSON.stringify(s);
         // console.log(data);
         for(var i = 0; i < data.best_rated_restaurant.length; i++) {
         	// console.log(data.nearby_restaurants[i].restaurant.name);
 			var place = data.best_rated_restaurant[i].restaurant;
 			food.push(place);
 		}
-		ready[1] = true;
-		//append to the blub the top cuisines in a scripted string statement. 
-
+		ready[1] = true; 
 		var topCuisines = data.top_cuisines;
 			topCuisines[topCuisines.length - 1] = 'and ' + topCuisines[topCuisines.length - 1];
-		
 			// console.log(topCuisines);
 			for (var j = 0; j < topCuisines.length; j++) { 
 				topCuisines[j] = " " + topCuisines[j];
@@ -564,7 +513,7 @@ function zomatoCityRestaurants(entityId,entityType) {
 };
 
 
-  function monthlyURLWeather() {
+function monthlyURLWeather() {
   	var d = new Date();
     var n = d.getMonth()
     var month = n + 1;
@@ -578,44 +527,39 @@ function zomatoCityRestaurants(entityId,entityType) {
     end = convertMonth + '28';
   
     var monthlyURL = "https://api.wunderground.com/api/49f1eacd626559d9/planner_"+beginConvert+end+"/q/" + stAbbr + "/" + city + ".json"
-    $.ajax({
-      url : monthlyURL,
-      dataType : "jsonp",
-      success : function(data) {
-        var low = data['trip']['temp_low']['avg']['F'];
-        var high = data['trip']['temp_high']['avg']['F'];
-        var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
-        var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+	$.ajax({
+	  url : monthlyURL,
+	  dataType : "jsonp",
+	  success : function(data) {
+	    var low = data['trip']['temp_low']['avg']['F'];
+	    var high = data['trip']['temp_high']['avg']['F'];
+	    var chance = data['trip']['chance_of']['chanceofprecip']['percentage'];
+	    var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 		var d = new Date();
-        $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p class='blurb'>For the month of " + monthNames[d.getMonth()] + ", the average low in " + cityState[0] + " is typically " + low + " &#8457" + " and the average high is " + high + " &#8457. There's a " + chance + "% probability of precipitation this month." 
-        	+ "</div></p>" ))
-        // $('#imageOne').append()
-        // $('#imageOne').append("<h2>Forecasts for the month of your trip</h2>")
-        // $('#imageOne').append("<h3>Average low "+low+" F°</h3>")
-        // $('#imageOne').append("<h3>Average high "+high+" F°</h3>")
-        // $('#imageOne').append("<h3>Chance of precipitation "+chance+" %</h3>");
-      }
-    });
-  }
+	    $("#cityblurb").parent(".wrapper").append($("<div class='weatherBlurb'><p class='blurb'>For the month of " + monthNames[d.getMonth()] + ", the average low in " + cityState[0] + " is typically " + low + " &#8457" + " and the average high is " + high + " &#8457. There's a " + chance + "% probability of precipitation this month." 
+	    	+ "</div></p>" ))
+	  }
+	});
+}
 
-  function currentWeather() {
+function currentWeather() {
     var currentURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + stAbbr + "/" + city + ".json"
 
-    $.ajax({
-      url : currentURL,
-      dataType : "jsonp",
-      success : function(data) {
-        var location = data['location']['city'];
-        var temp_f = data['current_observation']['temp_f'];
-        var image = data['current_observation']['icon_url'];
-        var conditions = data['current_observation']['weather']; 
-       
-        $(".weatherImg").attr("src", image);
-        $(".temp").html(temp_f + "&#8457");
-        // $('#imageTwo').append("<h3>The current condition is "+ conditions.toLowerCase() +".</h3>")
-      }
-      });
-  } 
+	$.ajax({
+	  url : currentURL,
+	  dataType : "jsonp",
+	  success : function(data) {
+	    var location = data['location']['city'];
+	    var temp_f = data['current_observation']['temp_f'];
+	    var image = data['current_observation']['icon_url'];
+	    var conditions = data['current_observation']['weather']; 
+	   
+	    $(".weatherImg").attr("src", image);
+	    $(".temp").html(temp_f + "&#8457");
+	  }
+  	});
+}
+
 function weatherCall(lat,lon) {
 
   var queryURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/q/" + lat + "," + lon + ".json"
@@ -625,9 +569,6 @@ function weatherCall(lat,lon) {
     success : function(data) {
       stAbbr = data.location.state
       city = data.location.city
-      //add to divs
-      // $("#imageOne").before("<div id='image'>")
-      // $('#image').append("<h2>"+ city + "," + stAbbr +"</h2>")
       monthlyURLWeather();
       currentWeather();
     }
@@ -635,22 +576,6 @@ function weatherCall(lat,lon) {
 
 }
 
-// function weatherCall() {
-// 	var queryURL = "https://api.wunderground.com/api/49f1eacd626559d9/geolookup/conditions/q/" + cityState[1] + "/" + cityState[0] + ".json"
-
-// 	$.ajax({
-// 		url : queryURL,
-// 		dataType : "jsonp",
-// 		success : function(data) {
-// 			var location = data['location']['city'];
-// 			var temp_f = data['current_observation']['temp_f'];
-// 			var image = data['current_observation']['icon_url'];
-// 			var conditions = data['current_observation']['weather'];  
-// 			$(".weatherImg").attr("src", image);
-// 			$(".temp").html(temp_f + "&#8457");
-// 		}
-// 	});
-// }
 function w3_open() {
     document.getElementById("main").style.marginRignt = "25%";
     document.getElementById("mySidebar").style.width = "25%";
@@ -666,6 +591,37 @@ function w3_close() {
 function realTime() {
   	$(".clock").html(moment().format("hh:mm A"));
 }
+
+
+$(document).ready(function(){
+	resizeDiv();
+});
+
+window.onresize = function(event) {
+	resizeDiv();
+}
+
+function resizeDiv() {
+	vpw = $(window).width();
+	vph = $(window).height();
+	if(vph > 699) {
+		$(".rightColumn").css({"height": (vph * 0.875) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.875) + "px"});
+	} else if(vph > 499) {
+		$(".rightColumn").css({"height": (vph * 0.825) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.825) + "px"});
+	} else if(vph > 399) {
+		$(".rightColumn").css({"height": (vph * 0.75) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.75) + "px"});
+	} else if(vph > 299) {
+		$(".rightColumn").css({"height": (vph * 0.7) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.7) + "px"});
+	} else if(vph > 199) {
+		$(".rightColumn").css({"height": (vph * 0.65) + "px"});
+		$(".leftColumn").css({"height": (vph * 0.65) + "px"});
+	}
+}
+
 // Old Code That May Be Useful
 
 // function scope(data) {
@@ -710,31 +666,30 @@ function realTime() {
 // 	markers.push(marker);
 // }
 
-$(document).ready(function(){
-	resizeDiv();
-});
-
-window.onresize = function(event) {
-	resizeDiv();
-}
-
-function resizeDiv() {
-	vpw = $(window).width();
-	vph = $(window).height();
-	if(vph > 699) {
-		$(".rightColumn").css({"height": (vph * 0.875) + "px"});
-		$(".leftColumn").css({"height": (vph * 0.875) + "px"});
-	} else if(vph > 499) {
-		$(".rightColumn").css({"height": (vph * 0.825) + "px"});
-		$(".leftColumn").css({"height": (vph * 0.825) + "px"});
-	} else if(vph > 399) {
-		$(".rightColumn").css({"height": (vph * 0.75) + "px"});
-		$(".leftColumn").css({"height": (vph * 0.75) + "px"});
-	} else if(vph > 299) {
-		$(".rightColumn").css({"height": (vph * 0.7) + "px"});
-		$(".leftColumn").css({"height": (vph * 0.7) + "px"});
-	} else if(vph > 199) {
-		$(".rightColumn").css({"height": (vph * 0.65) + "px"});
-		$(".leftColumn").css({"height": (vph * 0.65) + "px"});
-	}
-}
+// allows for Enter key to submit input field value
+// $("#autocomplete").keyup(function(event){
+//     if(event.keyCode == 13){
+//         $(".searchButton").click();
+//     }
+// });
+// CSE search for images temporarily disabled
+// function cseSearch(query) {
+// 	var cseKey = "AIzaSyBQWDimnA-AjyNZlXIsh_R3Ld8wYlAksfA";
+// 	// var cseKey = "AIzaSyDrufMCRtOuOdYgbTXT-piKR3A-hZb5YvU";
+// 	var SEid = "004303949972187002826:5vg83odxtam";
+// 	// var query = prompt("Enter a Search");
+// 	var queryURL = "https://www.googleapis.com/customsearch/v1?&key=" + cseKey + "&cx=" + SEid + "&q=" + query + "+hotels";
+// 	$.get(queryURL, function(data) {
+// 		$(".display2").empty();
+// 		$("#banner").attr("background-image", "");
+// 		$("#banner").attr("style", "background-image: url('" + data.items[0].pagemap.cse_image[0].src + "')");
+// 		for(var i = 0; i < data.items.length; i ++) {
+// 			if(data.items[i].pagemap.cse_image) {
+// 				for(var j = 0; j < data.items[i].pagemap.cse_image.length; j ++) {
+// 					var temp = $("<div class='imgWrap col-xs-12'><img class='image col-xs-12' src='" + data.items[i].pagemap.cse_image[0].src + "'></div>");
+// 					$(".display2").append(temp);
+// 				}
+// 			}
+// 		}
+// 	});	
+// }
