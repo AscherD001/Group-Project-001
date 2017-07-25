@@ -27,11 +27,6 @@ li {
   padding-top: 5px;
   padding-right: 5px;
 }
-#autocomplete1 {
-      width: 600px;
-    padding: 5px;
-    text-align: center;
-}
 .header > .wrapperR > p {
   font-size: 15px;
   font-weight: bold;
@@ -43,6 +38,11 @@ li {
   margin-top: 100px;
 /*  background-color: rgba(255,255,255,0.24);*/
   /*  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);*/
+}
+#autocomplete1 {
+      width: 600px;
+    padding: 5px;
+    text-align: center;
 }
 .NBbutton {
   color: white;
@@ -210,8 +210,9 @@ margin-bottom: 10px;
   max-width: 90%;
 }
 .wrapper {
-  padding-left: 30px;
-  padding-right: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    overflow: hidden;
 }
 .wrapperR {
   padding-right: 25px;
@@ -224,8 +225,8 @@ margin-bottom: 10px;
   padding-top: 8px;
 }
 #cityimage {
-  /*width: 100%;*/
-  max-height: 200px;
+    max-height: 100%;
+    width: 520px;
 }
 
 /*CODE PEN SEARCH*/
@@ -342,7 +343,8 @@ input[type="submit"]:hover {
 .clock {
   font-size: 200%;
   margin-top: 5px;
-  float: right;
+  margin-left: 40px;
+  float: left;
 }
 #viewCount {
   line-height: 30px;
